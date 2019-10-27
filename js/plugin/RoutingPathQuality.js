@@ -66,6 +66,11 @@ BR.RoutingPathQuality = L.Control.extend({
                         );
                     }
                 })
+            },
+            none: {
+                title: '',
+                icon: 'fa-spinner',
+                provider: null
             }
         };
         this.selectedProvider = this.options.initialProvider || 'incline';
@@ -118,6 +123,7 @@ BR.RoutingPathQuality = L.Control.extend({
 
     _update: function(segments) {
         this._routingSegments.clearLayers();
+        if (this.providers[this.selectedProvider].provider == null) return;
         const layers = this.providers[this.selectedProvider].provider.computeLayers(segments);
         if (layers) {
             for (var i = 0; i < layers.length; i++) {
