@@ -625,10 +625,10 @@ BR.Elevation = L.Control.Heightgraph.extend({
     },
     buildGeojson: function(segments) {
         const ret = [];
-        let steps = [segments[0].feature.properties.messages[1]];
+        let steps = [];
         let coords = [segments[0].feature.geometry.coordinates[0]];
         for (let segment of segments) {
-            steps = steps.concat(segment.feature.properties.messages.slice(2));
+            steps = steps.concat(segment.feature.properties.messages.slice(1));
             coords = coords.concat(segment.feature.geometry.coordinates.slice(1)); //cut off first coords (it's a duplicate)
         }
 
