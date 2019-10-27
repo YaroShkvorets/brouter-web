@@ -245,7 +245,7 @@
                 latLngs = routing.getWaypoints(),
                 segmentsLayer = routing._segments;
 
-            elevation.update(track, segmentsLayer);
+            elevation.update(track, segments /*segmentsLayer*/);
             routingPathQuality.update(track, segmentsLayer);
             if (BR.conf.transit) {
                 itinerary.update(track, segments);
@@ -286,13 +286,13 @@
 
         routingPathQuality.addTo(map);
 
-        map.addControl(
+        /*    map.addControl(
             new BR.OpacitySliderControl({
                 id: 'route',
                 title: i18next.t('map.opacity-slider'),
                 callback: L.bind(routing.setOpacity, routing)
             })
-        );
+        ); */
 
         // initial option settings (after controls are added and initialized with onAdd)
         router.setOptions(nogos.getOptions());

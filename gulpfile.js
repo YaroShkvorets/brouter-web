@@ -54,14 +54,22 @@ var paths = {
             'js/Map.js',
             'js/LayersConfig.js',
             'js/router/BRouter.js',
+            'Leaflet.Heightgraph/src/L.Control.Heightgraph.js',
+            'Leaflet.Sliders/src/L.Control.Sliders.js',
             'js/plugin/*.js',
             'js/control/*.js',
             'js/index.js'
         ]),
     styles: mainNpmFiles()
         .filter(f => RegExp('.*\\.css', 'i').test(f) && !RegExp('.*\\.min\\.css', 'i').test(f))
-        .concat('css/*.css'),
-    images: mainNpmFiles().filter(f => RegExp('.*.+(png|gif|svg)', 'i').test(f)),
+        .concat([
+            'css/*.css',
+            'leaflet.heightgraph/src/L.Control.Heightgraph.css',
+            'Leaflet.Sliders/src/L.Control.Sliders.css'
+        ]),
+    images: mainNpmFiles()
+        .filter(f => RegExp('.*.+(png|gif|svg)', 'i').test(f))
+        .concat('leaflet.heightgraph/src/images/*.svg'),
     fonts: mainNpmFiles().filter(f => RegExp('font-awesome/fonts/.*', 'i').test(f)),
     locales: 'locales/*.json',
     layers: 'layers/**/*.geojson',
