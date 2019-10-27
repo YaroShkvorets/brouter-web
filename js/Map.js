@@ -9,7 +9,7 @@ BR.Map = {
         map = new L.Map('map', {
             zoomControl: false, // add it manually so that we can translate it
             worldCopyJump: true,
-            minZoom: 0,
+            minZoom: 7,
             maxZoom: maxZoom
         });
         L.control
@@ -19,7 +19,7 @@ BR.Map = {
             })
             .addTo(map);
         if (!map.restoreView()) {
-            map.setView([50.99, 9.86], 5);
+            map.setView([45.4, -75.6], 11);
         }
 
         // two attribution lines by adding two controls, prevents ugly wrapping on
