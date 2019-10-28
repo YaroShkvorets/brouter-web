@@ -275,7 +275,9 @@
         }
 
         nogos.addTo(map);
-        L.easyBar([drawButton, reverseRouteButton, nogos.getButton(), deletePointButton, deleteRouteButton]).addTo(map);
+        L.easyBar([drawButton, reverseRouteButton, nogos.getButton() /*, deletePointButton, deleteRouteButton*/]).addTo(
+            map
+        );
         nogos.preventRoutePointOnCreate(routing);
 
         if (BR.keys.strava) {

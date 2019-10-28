@@ -12,12 +12,7 @@ BR.Map = {
             minZoom: 7,
             maxZoom: maxZoom
         });
-        L.control
-            .zoom({
-                zoomInTitle: i18next.t('map.zoomInTitle'),
-                zoomOutTitle: i18next.t('map.zoomOutTitle')
-            })
-            .addTo(map);
+
         if (!map.restoreView()) {
             map.setView([45.4, -75.6], 11);
         }
@@ -46,6 +41,14 @@ BR.Map = {
 
         new L.Control.PermalinkAttribution().addTo(map);
         map.attributionControl.setPrefix(false);
+
+        L.control
+            .zoom({
+                zoomInTitle: i18next.t('map.zoomInTitle'),
+                zoomOutTitle: i18next.t('map.zoomOutTitle'),
+                position: 'bottomright'
+            })
+            .addTo(map);
 
         var layersConfig = BR.layersConfig(map);
         var baseLayers = layersConfig.getBaseLayers();
@@ -94,7 +97,8 @@ BR.Map = {
                         title: i18next.t('map.locate-me')
                     },
                     icon: 'fa fa-location-arrow',
-                    iconLoading: 'fa fa-spinner fa-pulse'
+                    iconLoading: 'fa fa-spinner fa-pulse',
+                    position: 'bottomright'
                 })
                 .addTo(map);
         }
