@@ -79,6 +79,11 @@ var colorMappings = {
             text: 'Crossing',
             tag: 'crossing',
             color: '#000000'
+        },
+        '16': {
+            text: 'Sidewalk',
+            tag: 'sidewalk',
+            color: '#8e6cb5'
         }
     },
     surface: {
@@ -333,6 +338,38 @@ var colorMappings = {
             tag: 'crossing',
             color: '#000000'
         }
+    },
+    winter_service: {
+        '0': {
+            text: 'Unknown',
+            tag: '',
+            color: '#ffffff'
+        },
+        '1': {
+            text: 'Plowed',
+            tag: 'yes',
+            color: '#1f69b7'
+        },
+        '2': {
+            text: 'Not plowed',
+            tag: 'no',
+            color: '#f92e0a'
+        },
+        '3': {
+            text: 'Shared with cars',
+            tag: 'cars',
+            color: '#484848'
+        },
+        '4': {
+            text: 'Sidewalk, so likely yes',
+            tag: 'sidewalk',
+            color: '#18c312'
+        },
+        '5': {
+            text: 'Crossing',
+            tag: 'crossing',
+            color: '#000000'
+        }
     }
 };
 
@@ -518,6 +555,9 @@ BR.Elevation = L.Control.Heightgraph.extend({
                     if (val == 'crossing') {
                         curVal = 'crossing';
                     }
+                    if (val == 'sidewalk') {
+                        curVal = 'sidewalk';
+                    }
                 }
                 if (curVal == 'secondary_link') {
                     curVal = 'secondary';
@@ -573,6 +613,22 @@ BR.Elevation = L.Control.Heightgraph.extend({
                     val = getValue(str, 'footway');
                     if (val == 'crossing') {
                         curVal = 'crossing';
+                    }
+                }
+            }
+            if (tag == 'winter_service') {
+                let val = getValue(str, 'highway');
+                if (!['footway', 'path', 'cycleway', 'steps'].includes(val)) {
+                    curVal = 'cars';
+                }
+                if (curVal == '') {
+                    if (val == 'footway') {
+                        if (getValue(str, 'footway') == 'crossing') {
+                            curVal = 'crossing';
+                        }
+                        if (getValue(str, 'footway') == 'sidewalk') {
+                            curVal = 'sidewalk';
+                        }
                     }
                 }
             }
@@ -637,6 +693,7 @@ BR.Elevation = L.Control.Heightgraph.extend({
         ret.push(this.buildProfile(steps, coords, 'surface'));
         ret.push(this.buildProfile(steps, coords, 'maxspeed'));
         ret.push(this.buildProfile(steps, coords, 'lit'));
+        ret.push(this.buildProfile(steps, coords, 'winter_service'));
         return ret;
     },
     update: function(track, segments) {
