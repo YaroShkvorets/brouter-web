@@ -557,6 +557,15 @@
                     </li>
                     <li>
                         <a
+                            href="#tab_profile_control"
+                            role="tab"
+                            data-i18n="[title]sidebar.profile-control.title"
+                            title="Fine tune"
+                            ><i class="fa fa-sliders"></i
+                        ></a>
+                    </li>
+                    <li>
+                        <a
                             href="#tab_profile"
                             role="tab"
                             data-i18n="[title]sidebar.custom-profile.title"
@@ -642,6 +651,32 @@
                                 </div>
                             </div>
                             <div hidden id="optional-layers-tree"></div>
+                        </div>
+
+                        <div class="leaflet-sidebar-pane" id="tab_profile_control">
+                            <h1 class="leaflet-sidebar-header">
+                                <span class="leaflet-sidebar-close"><i class="fa fa-caret-right"></i></span
+                                ><span class="leaflet-sidebar-expand"><i class="fa fa-expand"></i></span
+                                ><span data-i18n="sidebar.profilecontrol.title">Fine tune</span>
+                            </h1>
+                            <div id="profile-control-wrapper"></div>
+                            <div class="leaflet-control-layers-separator"></div>
+                            <div id="leaflet-control-layers-profile-control-slider"></div>
+                            <div class="form-group" id="profile_control_buttons">
+                                <button
+                                    id="apply"
+                                    type="button"
+                                    class="btn btn-primary btn-sm"
+                                    data-uploading-text="Uploading…"
+                                >
+                                    <span class="fa fa-cloud-upload"></span>
+                                    <span data-i18n="sidebar.profile_control.apply">Apply</span>
+                                </button>
+                                <button id="clear" type="button" class="btn btn-secondary btn-sm">
+                                    <span class="fa fa-eraser"></span>
+                                    <span data-i18n="sidebar.profile_control.clear">Reset</span>
+                                </button>
+                            </div>
                         </div>
 
                         <div class="leaflet-sidebar-pane" id="tab_profile">

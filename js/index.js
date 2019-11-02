@@ -28,6 +28,7 @@
             elevation,
             exportRoute,
             profile,
+            profileControl,
             trackMessages,
             sidebar,
             drawButton,
@@ -151,6 +152,7 @@
         routingOptions.on('update', updateRoute);
         routingOptions.on('update', function(evt) {
             profile.update(evt.options);
+            profile.update(evt.options);
         });
 
         BR.NogoAreas.MSG_BUTTON = i18next.t('map.nogo.draw');
@@ -169,33 +171,36 @@
         }
         elevation = new BR.Elevation();
 
+        profileControl = new BR.ProfileControl();
         profile = new BR.Profile();
-        profile.on('update', function(evt) {
-            BR.message.hide();
-            var profileId = routingOptions.getCustomProfile();
-            router.uploadProfile(profileId, evt.profileText, function(err, profileId) {
-                if (!err) {
-                    routingOptions.setCustomProfile(profileId, true);
-                    updateRoute({
-                        options: routingOptions.getOptions()
-                    });
-                    if (!saveWarningShown) {
-                        profile.message.showWarning(i18next.t('warning.temporary-profile'));
-                        saveWarningShown = true;
-                    }
-                } else {
-                    profile.message.showError(err);
-                    if (profileId) {
+        [profile, profileControl].forEach(control =>
+            control.on('update', function(evt) {
+                BR.message.hide();
+                var profileId = routingOptions.getCustomProfile();
+                router.uploadProfile(profileId, evt.profileText, function(err, profileId) {
+                    if (!err) {
                         routingOptions.setCustomProfile(profileId, true);
-                        router.setOptions(routingOptions.getOptions());
+                        updateRoute({
+                            options: routingOptions.getOptions()
+                        });
+                        if (!saveWarningShown) {
+                            profile.message.showWarning(i18next.t('warning.temporary-profile'));
+                            saveWarningShown = true;
+                        }
+                    } else {
+                        profile.message.showError(err);
+                        if (profileId) {
+                            routingOptions.setCustomProfile(profileId, true);
+                            router.setOptions(routingOptions.getOptions());
+                        }
                     }
-                }
 
-                if (evt.callback) {
-                    evt.callback();
-                }
-            });
-        });
+                    if (evt.callback) {
+                        evt.callback();
+                    }
+                });
+            })
+        );
         profile.on('clear', function(evt) {
             profile.message.hide();
             routingOptions.setCustomProfile(null);
@@ -267,7 +272,8 @@
             defaultTabId: BR.conf.transit ? 'tab_itinerary' : 'tab_profile',
             listeningTabs: {
                 tab_profile: profile,
-                tab_data: trackMessages
+                tab_data: trackMessages,
+                tab_profile_control: profileControl
             }
         }).addTo(map);
         if (BR.conf.transit) {
@@ -300,6 +306,7 @@
         router.setOptions(nogos.getOptions());
         router.setOptions(routingOptions.getOptions());
         profile.update(routingOptions.getOptions());
+        profileControl.update(routingOptions.getOptions());
 
         // restore active layers from local storage when called without hash
         // (check before hash plugin init)
@@ -328,6 +335,7 @@
             routingOptions.setOptions(opts);
             nogos.setOptions(opts);
             profile.update(opts);
+            profileControl.update(opts);
 
             if (opts.lonlats) {
                 routing.draw(false);
