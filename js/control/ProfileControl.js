@@ -102,7 +102,9 @@ BR.ProfileControl = L.Evented.extend({
         this._makeControl('surfacePenaltyParam', 'Surface');
     },
 
-    _makeControl: function(sliderId, sliderTitle, defaultValue) {
+    _makeControl: function(sliderId, sliderTitle) {
+        var filter = new RegExp(this.escapeRegex(sliderId) + '(\\s+)?=(\\s+)?(\\d+(\\.\\d+)?)', 'g');
+        var defaultValue = parseFloat(filter.exec(this.profileText)[3]);
         this.profileParams[sliderId] = defaultValue;
         var slider = this._makeSlider(sliderId, sliderTitle, defaultValue);
         var label = document.createElement('label');
@@ -113,7 +115,6 @@ BR.ProfileControl = L.Evented.extend({
     },
 
     _makeSlider: function(sliderId, sliderTitle, defaultValue) {
-        var self = this;
         var slider = new BR.ProfileControlSlider({
             id: sliderId,
             reversed: false,

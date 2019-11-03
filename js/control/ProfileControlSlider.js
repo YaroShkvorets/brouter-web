@@ -12,8 +12,9 @@ BR.ProfileControlSlider = L.Class.extend({
         L.setOptions(this, options);
 
         var input = (this.input = $('<input id="slider-' + this.options.id + '" type="text"/>')),
-            item = BR.Util.localStorageAvailable() ? localStorage['profileControlSlider' + this.options.id] : null,
-            value = item ? parseInt(item) : 0.5;
+            //item = BR.Util.localStorageAvailable() ? localStorage['profileControlSlider' + this.options.id] : null,
+            //value = item ? parseInt(item) : 0.5;
+            value = options.defaultValue;
 
         if (value < 0) {
             value = 0;
