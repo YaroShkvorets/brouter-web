@@ -100,6 +100,7 @@ BR.ProfileControl = L.Evented.extend({
         this._makeControl('roadsPenaltyParam', 'Roads');
         this._makeControl('sidewalkPenaltyParam', 'Sidewalks');
         this._makeControl('surfacePenaltyParam', 'Surface');
+        this._makeControl('litPenaltyParam', 'Lit');
     },
 
     _makeControl: function(sliderId, sliderTitle) {

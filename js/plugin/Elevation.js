@@ -253,6 +253,11 @@ var colorMappings = {
             text: '3 Car Lanes',
             tag: 'cars-3lanes',
             color: '#f72011'
+        },
+        '13': {
+            text: 'Sidewalk',
+            tag: 'sidewalk',
+            color: '#8e6cb5'
         }
     },
     maxspeed: {
@@ -596,14 +601,23 @@ BR.Elevation = L.Control.Heightgraph.extend({
                             break;
                     }
                 } else {
-                    if (curVal > 5) {
-                        curVal = 5;
+                    if (parseFloat(curVal) > 5) {
+                        curVal = '5';
                     }
+                    /*if(curVal!=''){
+                      val = getValue(str, 'oneway');
+                      if(val='yes'){
+                        curVal = 2*parseFloat(curVal);
+                      }
+                    }*/
                 }
                 if (val == 'footway') {
                     val = getValue(str, 'footway');
                     if (val == 'crossing') {
                         curVal = 'crossing';
+                    }
+                    if (val == 'sidewalk') {
+                        curVal = 'sidewalk';
                     }
                 }
             }
