@@ -693,11 +693,11 @@ BR.Elevation = L.Control.Heightgraph.extend({
             }
             while (i < coords.length) {
                 //insert additional nodes (for smoother profile)
-                if (i > 0) {
+                /*if (i > 0) {      //removed because breaks when crossing -90 longitude
                     const mid = middlePoint(coords[i - 1][0], coords[i - 1][1], coords[i][0], coords[i][1]);
                     feature.geometry.coordinates.push([mid[1], mid[0], (coords[i][2] + coords[i - 1][2]) / 2]);
                     totalPoints++;
-                }
+                }*/
                 feature.geometry.coordinates.push([coords[i][0], coords[i][1], coords[i][2]]);
                 totalPoints++;
                 i++;

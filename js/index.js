@@ -222,6 +222,21 @@
             routing: routing
         });
 
+        L.easyButton({
+            states: [
+                {
+                    stateName: 'open in pathways editor',
+                    icon: 'fa-pencil-square-o',
+                    onClick: function() {
+                        const center = map.getCenter();
+                        const url = 'https://maps.bikeottawa.ca/pathways/?lat=' + center.lat + '&lng=' + center.lng;
+                        window.open(url, '_blank');
+                    },
+                    title: 'Pathways Editor'
+                }
+            ]
+        }).addTo(map);
+
         exportRoute = new BR.Export(router, pois);
 
         routing.on('routing:routeWaypointEnd routing:setWaypointsEnd', function(evt) {

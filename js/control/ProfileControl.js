@@ -97,14 +97,14 @@ BR.ProfileControl = L.Evented.extend({
     },
 
     _initControls: function(profileText) {
-        this._makeControl('roadsPenaltyParam', 'Avoid unsafe roads');
-        this._makeControl('sidewalkPenaltyParam', 'Avoid sidewalks');
-        this._makeControl('surfacePenaltyParam', 'Avoid wet feet');
-        this._makeControl('litPenaltyParam', 'Avoid dark areas');
-        this._makeControl('plowPenaltyParam', 'Avoid non-plowed pathways');
+        this._makeControl('roadsPenaltyParam', 'Avoid unsafe roads', 'Avoid unsafe roads');
+        this._makeControl('sidewalkPenaltyParam', 'Avoid sidewalks', 'Avoid sidewalks');
+        this._makeControl('surfacePenaltyParam', 'Avoid wet feet', 'Avoid unpaved surfaces');
+        this._makeControl('litPenaltyParam', 'Avoid dark areas', 'Avoid unlit pathways');
+        this._makeControl('plowPenaltyParam', 'Avoid non-plowed pathways', 'Avoid non-plowed pathways');
     },
 
-    _makeControl: function(sliderId, sliderTitle) {
+    _makeControl: function(sliderId, sliderTitle, hint) {
         var filter = new RegExp(this.escapeRegex(sliderId) + '(\\s+)?=(\\s+)?(\\d+(\\.\\d+)?)', 'g');
         var defaultValue = parseFloat(filter.exec(this.profileText)[3]);
         this.profileParams[sliderId] = defaultValue;
