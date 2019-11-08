@@ -12,9 +12,9 @@ BR.ProfileControlSlider = L.Class.extend({
         L.setOptions(this, options);
 
         var input = (this.input = $('<input id="slider-' + this.options.id + '" type="text"/>')),
-            //item = BR.Util.localStorageAvailable() ? localStorage['profileControlSlider' + this.options.id] : null,
-            //value = item ? parseInt(item) : 0.5;
-            value = options.defaultValue;
+            item = BR.Util.localStorageAvailable() ? localStorage['profileControlSlider' + this.options.id] : null,
+            value = item ? parseFloat(item) : options.defaultValue;
+        value = options.defaultValue; //remove this line to load value from local storage
 
         if (value < 0) {
             value = 0;
@@ -34,13 +34,11 @@ BR.ProfileControlSlider = L.Class.extend({
                 reversed: this.options.reversed,
                 selection: this.options.reversed ? 'before' : 'after' // inverted, serves as track style, see css
             })
-            .on('slide slideStop', { self: this }, function(evt) {
-                evt.data.self.options.callback(evt.value);
-            })
             .on('slideStop', { self: this }, function(evt) {
                 if (BR.Util.localStorageAvailable()) {
-                    localStorage['opacitySliderValue' + evt.data.self.options.id] = evt.value;
+                    localStorage['profileControlSlider' + evt.data.self.options.id] = evt.value;
                 }
+                evt.data.self.options.callback(evt.value);
             });
 
         this.getElement().title = this.options.title;

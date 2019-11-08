@@ -4,8 +4,8 @@ BR.ProfileControl = L.Evented.extend({
     profileParams: [],
 
     initialize: function() {
-        L.DomUtil.get('apply').onclick = L.bind(this._apply, this);
-        L.DomUtil.get('clear').onclick = L.bind(this.clear, this);
+        //L.DomUtil.get('apply').onclick = L.bind(this._apply, this);
+        //L.DomUtil.get('clear').onclick = L.bind(this.clear, this);
 
         this.message = new BR.Message('profile_message', {
             alert: true
@@ -97,10 +97,11 @@ BR.ProfileControl = L.Evented.extend({
     },
 
     _initControls: function(profileText) {
-        this._makeControl('roadsPenaltyParam', 'Roads');
-        this._makeControl('sidewalkPenaltyParam', 'Sidewalks');
-        this._makeControl('surfacePenaltyParam', 'Surface');
-        this._makeControl('litPenaltyParam', 'Lit');
+        this._makeControl('roadsPenaltyParam', 'Avoid unsafe roads');
+        this._makeControl('sidewalkPenaltyParam', 'Avoid sidewalks');
+        this._makeControl('surfacePenaltyParam', 'Avoid wet feet');
+        this._makeControl('litPenaltyParam', 'Avoid dark areas');
+        this._makeControl('plowPenaltyParam', 'Avoid non-plowed pathways');
     },
 
     _makeControl: function(sliderId, sliderTitle) {
@@ -108,11 +109,14 @@ BR.ProfileControl = L.Evented.extend({
         var defaultValue = parseFloat(filter.exec(this.profileText)[3]);
         this.profileParams[sliderId] = defaultValue;
         var slider = this._makeSlider(sliderId, sliderTitle, defaultValue);
+        var div = document.createElement('div');
         var label = document.createElement('label');
+        label.className = 'profile-slider-label';
         label.innerHTML = sliderTitle;
 
-        L.DomUtil.get('leaflet-control-layers-profile-control-slider').appendChild(label);
-        L.DomUtil.get('leaflet-control-layers-profile-control-slider').appendChild(slider.getElement());
+        L.DomUtil.get('leaflet-control-layers-profile-control-slider').appendChild(div);
+        div.appendChild(label);
+        div.appendChild(slider.getElement());
     },
 
     _makeSlider: function(sliderId, sliderTitle, defaultValue) {
@@ -124,6 +128,11 @@ BR.ProfileControl = L.Evented.extend({
             parent: this,
             callback: function(value) {
                 this.parent.profileParams[sliderId] = value;
+                const profile = this.parent._generateProfile();
+
+                this.parent.fire('update', {
+                    profileText: profile
+                });
             }
         });
         return slider;

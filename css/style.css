@@ -250,8 +250,14 @@ https://css-tricks.com/svg-line-animation-works/
     margin: 10px 0;
 }
 .slider.slider-horizontal {
-    width: 180px;
-    margin: 0 10px;
+    width: 200px;
+    margin: 0 0 10px 10px;
+}
+
+.profile-slider-label {
+    width: 100%;
+    margin: 0 0 0 0;
+    font-size: 14px;
 }
 
 /* invert track and selection styles to get partial gradient for "selection" */

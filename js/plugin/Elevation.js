@@ -31,7 +31,7 @@ var colorMappings = {
             color: '#67b5bd'
         },
         '6': {
-            text: 'Track',
+            text: 'Single Track',
             tag: 'track',
             color: '#795548'
         },
@@ -200,7 +200,7 @@ var colorMappings = {
             color: '#6574c3'
         },
         '2': {
-            text: '1m', //20 and under
+            text: '1m',
             tag: '1',
             color: '#5063c3'
         },
@@ -516,12 +516,13 @@ BR.Elevation = L.Control.Heightgraph.extend({
         setParent(this.getContainer(), document.getElementById('elevation-chart'));
     },
 
-    buildProfile: function(steps, coords, tag) {
+    buildProfile: function(steps, coords, tag, text) {
         const ret = {
             type: 'FeatureCollection',
             features: [],
             properties: {
-                summary: tag
+                summary: tag,
+                text: text
             }
         };
 
@@ -577,9 +578,14 @@ BR.Elevation = L.Control.Heightgraph.extend({
             if (tag == 'surface') {
                 //if surface unknown and it's a crossing => asphalt
                 if (curVal == '') {
-                    const val = getValue(str, 'footway');
+                    let val = getValue(str, 'footway');
                     if (val == 'crossing') {
                         curVal = 'asphalt';
+                    } else {
+                        val = getValue(str, 'highway');
+                        if (val == 'track') {
+                            curVal = 'unpaved';
+                        }
                     }
                 }
             }
@@ -634,6 +640,13 @@ BR.Elevation = L.Control.Heightgraph.extend({
                 let val = getValue(str, 'highway');
                 if (!['footway', 'path', 'cycleway', 'steps'].includes(val)) {
                     curVal = 'cars';
+                } else {
+                    if (curVal == '') {
+                        const surface = getValue(str, 'surface');
+                        if (['ground', 'gravel', 'unpaved', 'dirt', 'grass', 'fine_gravel'].includes(surface)) {
+                            curVal = 'no';
+                        }
+                    }
                 }
                 if (curVal == '') {
                     if (val == 'footway') {
@@ -643,8 +656,13 @@ BR.Elevation = L.Control.Heightgraph.extend({
                         if (getValue(str, 'footway') == 'sidewalk') {
                             curVal = 'sidewalk';
                         }
+                        if (getValue(str, 'highway') == 'track') {
+                            curVal = 'no';
+                        }
                     }
                 }
+
+                val = getValue(str, 'surface');
             }
             key = parseInt(getKeyByValue(colorMappings[tag], curVal));
 
@@ -700,14 +718,17 @@ BR.Elevation = L.Control.Heightgraph.extend({
         for (let segment of segments) {
             steps = steps.concat(segment.feature.properties.messages.slice(1));
             coords = coords.concat(segment.feature.geometry.coordinates.slice(1)); //cut off first coords (it's a duplicate)
+
+            steps[steps.length - 1][0] = coords[coords.length - 1][0] * 1000000; //quick fix for last point
+            steps[steps.length - 1][1] = coords[coords.length - 1][1] * 1000000;
         }
 
-        ret.push(this.buildProfile(steps, coords, 'width'));
-        ret.push(this.buildProfile(steps, coords, 'highway'));
-        ret.push(this.buildProfile(steps, coords, 'surface'));
-        ret.push(this.buildProfile(steps, coords, 'maxspeed'));
-        ret.push(this.buildProfile(steps, coords, 'lit'));
-        ret.push(this.buildProfile(steps, coords, 'winter_service'));
+        ret.push(this.buildProfile(steps, coords, 'highway', 'Way Type'));
+        ret.push(this.buildProfile(steps, coords, 'width', 'Width'));
+        ret.push(this.buildProfile(steps, coords, 'surface', 'Surface'));
+        ret.push(this.buildProfile(steps, coords, 'maxspeed', 'Speed Limit'));
+        ret.push(this.buildProfile(steps, coords, 'lit', 'Lit'));
+        ret.push(this.buildProfile(steps, coords, 'winter_service', 'Snow Plowing'));
         return ret;
     },
     update: function(track, segments) {
