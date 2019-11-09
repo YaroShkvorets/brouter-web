@@ -429,11 +429,13 @@ function middlePoint(lat1, lng1, lat2, lng2) {
 function getValue(str, tag) {
     if (!str) return '';
 
-    const arr = str.split(' ').reduce((accum, x) => {
-        const kv = x.split('=');
-        return { ...accum, ...{ [kv[0]]: kv[1] } };
-    }, {});
-    return arr[tag] ? arr[tag] : '';
+    for (let ele of str.split(' ')) {
+        const kv = ele.split('=');
+        if (kv[0] == tag) {
+            return kv[1];
+        }
+    }
+    return '';
 }
 
 function getLanes(str) {
