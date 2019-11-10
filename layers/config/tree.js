@@ -62,6 +62,7 @@ BR.confLayers.tree = {
     },
     'overlays': {
         'worldwide': [
+            'Strava_Cycling_Heatmap',
             'HikeBike.HillShading',
             'Waymarked_Trails-Cycling',
             'Waymarked_Trails-Hiking',

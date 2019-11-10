@@ -1,0 +1,20 @@
+{
+  "geometry": null,
+  "properties": {
+    "attribution": {
+      "required": true,
+      "text": "© Strava",
+      "url": "https://www.strava.com/heatmap"
+    },
+    "icon": "https://cdn6.aptoide.com/imgs/b/9/d/b9d6160b62051a4dc8f44424e75a7a7e_icon.png?w=256",
+    "id": "Strava_Cycling_Heatmap",
+    "max_zoom": 20,
+    "name": "Strava Cycling Heatmap",
+    "overlay": true,
+    "type": "tms",
+    "url": "https://anygis.ru/api/v1/Tracks_Strava_Ride/{x}/{y}/{z}",
+    "valid-georeference": true,
+    "dataSource": "Strava"
+  },
+  "type": "Feature"
+}

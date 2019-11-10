@@ -1,10 +1,12 @@
 BR.confLayers = {};
 
 BR.confLayers.defaultBaseLayers = [
+    'wikimedia-map',
+    'Esri.WorldImagery',
+    '1010',  //OpenStreetMap.se
     'standard',
-    'OpenTopoMap',
-    'Stamen.Terrain',
-    'Esri.WorldImagery'
+    '1065',  //hike & bike
+    '1059' //public transit
 ];
 
 // worldwide monolingual layers to add as default when browser language matches
@@ -15,16 +17,18 @@ BR.confLayers.languageDefaultLayers = [
 ];
 
 BR.confLayers.defaultOverlays =  [
+    'Strava_Cycling_Heatmap',
     'HikeBike.HillShading',
     'Waymarked_Trails-Cycling',
-    'Waymarked_Trails-Hiking'
+    //'Waymarked_Trails-Hiking',
+    'mapillary-coverage-raster'
 ];
 
 BR.confLayers.legacyNameToIdMap = {
     'OpenStreetMap': 'standard',
     'OpenStreetMap.de': 'osm-mapnik-german_style',
     'OpenTopoMap': 'OpenTopoMap',
-    'Esri World Imagery': 'Esri.WorldImagery',
+    'Esri Satellite Imagery': 'Esri.WorldImagery',
     'Cycling (Waymarked Trails)': 'Waymarked_Trails-Cycling',
     'Hiking (Waymarked Trails)': 'Waymarked_Trails-Hiking'
 };
