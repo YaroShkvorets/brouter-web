@@ -86,6 +86,53 @@ var colorMappings = {
             color: '#8e6cb5'
         }
     },
+    cycleway: {
+        '0': {
+            text: 'Mixed with cars',
+            tag: '',
+            color: '#ff5722'
+        },
+        '1': {
+            text: 'Separated pathway',
+            tag: 'pathway',
+            color: '#3744cc'
+        },
+        '2': {
+            text: 'Separated cycle track',
+            tag: 'track',
+            color: '#024994'
+        },
+        '3': {
+            text: 'Mixed with cars - sharrows',
+            tag: 'shared_lane',
+            color: '#ff9800'
+        },
+        '4': {
+            text: 'Bike lane',
+            tag: 'lane',
+            color: '#4caf50'
+        },
+        '5': {
+            text: 'Paved shoulder',
+            tag: 'shoulder',
+            color: '#cddc39'
+        },
+        '6': {
+            text: 'Shared busway',
+            tag: 'share_busway',
+            color: '#67b5bd'
+        },
+        '7': {
+            text: 'Crossing',
+            tag: 'crossing',
+            color: '#000000'
+        },
+        '8': {
+            text: 'Sidewalk',
+            tag: 'sidewalk',
+            color: '#8e6cb5'
+        }
+    },
     surface: {
         '0': {
             tag: '',
@@ -190,7 +237,7 @@ var colorMappings = {
     },
     width: {
         '0': {
-            text: 'Unknown',
+            text: 'Unknown path width',
             tag: '',
             color: '#ffffff'
         },
@@ -262,7 +309,7 @@ var colorMappings = {
     },
     maxspeed: {
         '0': {
-            text: 'Unknown',
+            text: 'Road with unknown speed',
             tag: '',
             color: '#ffffff'
         },
@@ -351,12 +398,12 @@ var colorMappings = {
             color: '#ffffff'
         },
         '1': {
-            text: 'Plowed',
+            text: 'Plowed pathway',
             tag: 'yes',
             color: '#1f69b7'
         },
         '2': {
-            text: 'Not plowed',
+            text: 'Not plowed pathway',
             tag: 'no',
             color: '#f92e0a'
         },
@@ -368,7 +415,7 @@ var colorMappings = {
         '4': {
             text: 'Sidewalk, so likely yes',
             tag: 'sidewalk',
-            color: '#18c312'
+            color: '#8e6cb5'
         },
         '5': {
             text: 'Crossing',
@@ -545,16 +592,12 @@ BR.Elevation = L.Control.Heightgraph.extend({
 
             if (tag == 'maxspeed') {
                 //tweaks to take into account road type, etc
-                if (curVal == '') {
-                    let val = getValue(str, 'highway');
-                    if (['footway', 'path', 'cycleway', 'steps'].includes(val)) {
-                        curVal = 'no_cars';
-                    }
-                    if (val == 'footway') {
-                        if (getValue(str, 'footway') == 'crossing') {
-                            curVal = 'crossing';
-                        }
-                    }
+                let val = getValue(str, 'highway');
+                if (['footway', 'path', 'cycleway', 'steps', 'pedestrian'].includes(val)) {
+                    curVal = 'no_cars';
+                }
+                if (val == 'footway' && getValue(str, 'footway') == 'crossing') {
+                    curVal = 'crossing';
                 }
             }
             if (tag == 'highway') {
@@ -575,6 +618,41 @@ BR.Elevation = L.Control.Heightgraph.extend({
                 }
                 if (curVal == 'primary_link') {
                     curVal = 'primary';
+                }
+            }
+            if (tag == 'cycleway') {
+                if (curVal == '') {
+                    curVal = getValue(str, 'cycleway:both');
+                }
+                if (curVal == '') {
+                    const highway = getValue(str, 'highway');
+                    if (highway == 'footway' || highway == 'path' || highway == 'pedestrian' || highway == 'steps') {
+                        curVal = 'pathway';
+                        if (getValue(str, 'footway') == 'crossing') {
+                            curVal = 'crossing';
+                        }
+                        if (getValue(str, 'footway') == 'sidewalk') {
+                            curVal = 'sidewalk';
+                        }
+                    }
+                    if (highway == 'cycleway') {
+                        curVal = 'track';
+                    }
+                }
+                if (curVal == '') {
+                    //if still no value
+                    const reverse = getValue(str, 'reversedirection');
+                    if (reverse == 'yes') {
+                        curVal = getValue(str, 'cycleway:left');
+                    } else {
+                        curVal = getValue(str, 'cycleway:right');
+                    }
+                }
+                if (curVal == 'opposite_lane') {
+                    curVal = 'lane';
+                }
+                if (curVal == 'no') {
+                    curVal = '';
                 }
             }
             if (tag == 'surface') {
@@ -726,6 +804,7 @@ BR.Elevation = L.Control.Heightgraph.extend({
         }
 
         ret.push(this.buildProfile(steps, coords, 'highway', 'Way Type'));
+        ret.push(this.buildProfile(steps, coords, 'cycleway', 'Cycling Facility'));
         ret.push(this.buildProfile(steps, coords, 'width', 'Width'));
         ret.push(this.buildProfile(steps, coords, 'surface', 'Surface'));
         ret.push(this.buildProfile(steps, coords, 'maxspeed', 'Speed Limit'));
