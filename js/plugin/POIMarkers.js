@@ -21,7 +21,7 @@ BR.PoiMarkers = L.Control.extend({
             states: [
                 {
                     stateName: 'activate-poi',
-                    icon: 'fa-hand-o-right',
+                    icon: 'fa-map-pin',
                     onClick: function() {
                         self.draw(true);
                     },
@@ -29,7 +29,7 @@ BR.PoiMarkers = L.Control.extend({
                 },
                 {
                     stateName: 'deactivate-poi',
-                    icon: 'fa-hand-o-right active',
+                    icon: 'fa-map-pin active',
                     onClick: function() {
                         self.draw(false);
                     },

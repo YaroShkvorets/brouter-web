@@ -28,7 +28,7 @@ var colorMappings = {
         '5': {
             text: 'Path',
             tag: 'path',
-            color: '#67b5bd'
+            color: '#03a9f4'
         },
         '6': {
             text: 'Single Track',
@@ -38,12 +38,12 @@ var colorMappings = {
         '7': {
             text: 'Cycleway',
             tag: 'cycleway',
-            color: '#3744cc'
+            color: '#2196f3'
         },
         '8': {
             text: 'Footway',
             tag: 'footway',
-            color: '#8acfd5'
+            color: '#00bcd4'
         },
         '9': {
             text: 'Steps',
@@ -95,12 +95,12 @@ var colorMappings = {
         '1': {
             text: 'Separated pathway',
             tag: 'pathway',
-            color: '#3744cc'
+            color: '#03a9f4'
         },
         '2': {
-            text: 'Separated cycle track',
+            text: 'Separated cycleway',
             tag: 'track',
-            color: '#024994'
+            color: '#2196f3'
         },
         '3': {
             text: 'Mixed with cars - sharrows',
@@ -403,7 +403,7 @@ var colorMappings = {
             color: '#1f69b7'
         },
         '2': {
-            text: 'Not plowed pathway',
+            text: 'Non-plowed pathway',
             tag: 'no',
             color: '#f92e0a'
         },
@@ -511,7 +511,7 @@ function getLanes(str) {
 BR.Elevation = L.Control.Heightgraph.extend({
     options: {
         width: $('#map').outerWidth(),
-        height: 200,
+        height: 150,
         margins: {
             top: 20,
             right: 30,

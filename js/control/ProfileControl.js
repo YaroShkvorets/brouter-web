@@ -97,18 +97,19 @@ BR.ProfileControl = L.Evented.extend({
     },
 
     _initControls: function(profileText) {
-        this._makeControl('roadsPenaltyParam', 'Avoid unsafe roads', 'Avoid unsafe roads');
+        this._makeControl('roadsPenaltyParam', 'Avoid unsafe roads', 'Avoid dangerous roads');
         this._makeControl('sidewalkPenaltyParam', 'Avoid sidewalks', 'Avoid sidewalks');
-        this._makeControl('surfacePenaltyParam', 'Avoid wet feet', 'Avoid unpaved surfaces');
-        this._makeControl('litPenaltyParam', 'Avoid dark areas', 'Avoid unlit pathways');
-        this._makeControl('plowPenaltyParam', 'Avoid non-plowed pathways', 'Avoid non-plowed pathways');
+        this._makeControl('surfacePenaltyParam', 'Avoid wet feet', 'Avoid unpaved pathways and roads');
+        this._makeControl('litPenaltyParam', 'Avoid dark pathways', 'Avoid unlit pathways');
+        this._makeControl('plowPenaltyParam', 'Avoid snowbanks', 'Avoid non-plowed pathways');
+        this._makeControl('stopSignPenaltyParam', 'Avoid stops and lights', 'Avoid Stop signs and traffic lights');
     },
 
     _makeControl: function(sliderId, sliderTitle, hint) {
         var filter = new RegExp(this.escapeRegex(sliderId) + '(\\s+)?=(\\s+)?(\\d+(\\.\\d+)?)', 'g');
         var defaultValue = parseFloat(filter.exec(this.profileText)[3]);
         this.profileParams[sliderId] = defaultValue;
-        var slider = this._makeSlider(sliderId, sliderTitle, defaultValue);
+        var slider = this._makeSlider(sliderId, hint, defaultValue);
         var div = document.createElement('div');
         var label = document.createElement('label');
         label.className = 'profile-slider-label';

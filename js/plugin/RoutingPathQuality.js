@@ -12,6 +12,11 @@ BR.RoutingPathQuality = L.Control.extend({
         layersControl.addOverlay(this._routingSegments, i18next.t('map.layer.route-quality'));
 
         this.providers = {
+            none: {
+                title: 'Route color coding',
+                icon: 'fa-spinner',
+                provider: null
+            },
             incline: {
                 title: i18next.t('map.route-quality-incline'),
                 icon: 'fa-line-chart',
@@ -66,14 +71,9 @@ BR.RoutingPathQuality = L.Control.extend({
                         );
                     }
                 })
-            },
-            none: {
-                title: '',
-                icon: 'fa-spinner',
-                provider: null
             }
         };
-        this.selectedProvider = this.options.initialProvider || 'incline';
+        this.selectedProvider = this.options.initialProvider || 'none';
     },
 
     onAdd: function(map) {

@@ -222,21 +222,6 @@
             routing: routing
         });
 
-        L.easyButton({
-            states: [
-                {
-                    stateName: 'open in pathways editor',
-                    icon: 'fa-pencil-square-o',
-                    onClick: function() {
-                        const center = map.getCenter();
-                        const url = 'https://maps.bikeottawa.ca/pathways/?lat=' + center.lat + '&lng=' + center.lng;
-                        window.open(url, '_blank');
-                    },
-                    title: 'Pathways Editor'
-                }
-            ]
-        }).addTo(map);
-
         exportRoute = new BR.Export(router, pois);
 
         routing.on('routing:routeWaypointEnd routing:setWaypointsEnd', function(evt) {
@@ -281,8 +266,6 @@
 
         elevation.addBelow(map);
 
-        pois.addTo(map);
-
         sidebar = BR.sidebar({
             defaultTabId: BR.conf.transit ? 'tab_itinerary' : 'tab_profile',
             listeningTabs: {
@@ -296,10 +279,12 @@
         }
 
         nogos.addTo(map);
-        L.easyBar([drawButton, reverseRouteButton, nogos.getButton() /*, deletePointButton, deleteRouteButton*/]).addTo(
+        L.easyBar([drawButton, reverseRouteButton, nogos.getButton() /*, deletePointButton*/, deleteRouteButton]).addTo(
             map
         );
         nogos.preventRoutePointOnCreate(routing);
+
+        pois.addTo(map);
 
         if (BR.keys.strava) {
             BR.stravaSegments(map, layersControl);
@@ -308,6 +293,56 @@
         BR.tracksLoader(map, layersControl, routing);
 
         routingPathQuality.addTo(map);
+
+        var dlButton = L.easyButton({
+            states: [
+                {
+                    stateName: 'export',
+                    icon: 'fa-cloud-download',
+                    onClick: function() {
+                        if (!document.getElementById('exportButton').classList.contains('disabled')) {
+                            document.getElementById('exportButton').click();
+                        }
+                    },
+                    title: 'Save route'
+                }
+            ]
+        });
+        var upButton = L.easyButton({
+            states: [
+                {
+                    stateName: 'load',
+                    icon: 'fa-upload',
+                    onClick: function() {
+                        document.getElementById('navbarLoadTracks').click();
+                    },
+                    title: 'Load tracks'
+                }
+            ]
+        });
+
+        L.easyBar([dlButton, upButton]).addTo(map);
+
+        L.easyButton({
+            states: [
+                {
+                    stateName: 'Open in pathways editor',
+                    icon: 'fa-pencil-square-o',
+                    onClick: function() {
+                        const center = map.getCenter();
+                        const url =
+                            'https://maps.bikeottawa.ca/pathways/?lat=' +
+                            center.lat +
+                            '&lng=' +
+                            center.lng +
+                            '&zoom=' +
+                            map.getZoom();
+                        window.open(url, '_blank');
+                    },
+                    title: 'Pathways Editor'
+                }
+            ]
+        }).addTo(map);
 
         /*    map.addControl(
             new BR.OpacitySliderControl({
