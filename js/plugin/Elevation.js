@@ -3,32 +3,32 @@ var colorMappings = {
         '0': {
             text: 'Other',
             tag: '',
-            color: '#e379ec'
+            color: '#e203f5'
         },
         '1': {
             text: 'Residential',
             tag: 'residential',
-            color: '#028794'
+            color: '#ff0'
         },
         '2': {
             text: 'Service',
             tag: 'service',
-            color: '#47b558'
+            color: '#fc0'
         },
         '3': {
             text: 'Minor',
             tag: 'unclassified',
-            color: '#73dc36'
+            color: '#fa0'
         },
         '4': {
             text: 'Collector',
             tag: 'tertiary',
-            color: '#ffc107'
+            color: '#f70'
         },
         '5': {
             text: 'Path',
             tag: 'path',
-            color: '#03a9f4'
+            color: '#2196f3'
         },
         '6': {
             text: 'Single Track',
@@ -38,7 +38,7 @@ var colorMappings = {
         '7': {
             text: 'Cycleway',
             tag: 'cycleway',
-            color: '#2196f3'
+            color: '#304ffe'
         },
         '8': {
             text: 'Footway',
@@ -48,32 +48,32 @@ var colorMappings = {
         '9': {
             text: 'Steps',
             tag: 'steps',
-            color: '#07da2e'
+            color: '#00c853'
         },
         '10': {
             text: 'Ferry',
             tag: 'ferry',
-            color: '#a2dfe5'
+            color: '#0af113'
         },
         '11': {
             text: 'Arterial',
             tag: 'secondary',
-            color: '#ff5722'
+            color: '#f40'
         },
         '12': {
             text: 'Primary',
             tag: 'primary',
-            color: '#ec4325'
+            color: '#f00'
         },
         '13': {
             text: 'Trunk',
             tag: 'trunk',
-            color: '#f90000'
+            color: '#f00'
         },
         '14': {
             text: 'motorway',
             tag: 'Highway',
-            color: '#da4c05'
+            color: '#000000'
         },
         '15': {
             text: 'Crossing',
@@ -242,42 +242,42 @@ var colorMappings = {
             color: '#ffffff'
         },
         '1': {
-            text: '0.5m',
+            text: '0.5 metre wide',
             tag: '0.5',
             color: '#6574c3'
         },
         '2': {
-            text: '1m',
+            text: '1 metre wide',
             tag: '1',
             color: '#5063c3'
         },
         '3': {
-            text: '1.5m',
+            text: '1.5 metre wide',
             tag: '1.5',
             color: '#3a51c1'
         },
         '4': {
-            text: '2m',
+            text: '2 metre wide',
             tag: '2',
             color: '#1e3ac1'
         },
         '5': {
-            text: '2.5m',
+            text: '2.5 metre wide',
             tag: '2.5',
             color: '#1330bd'
         },
         '6': {
-            text: '3m',
+            text: '3 metre wide',
             tag: '3',
             color: '#0725b9'
         },
         '7': {
-            text: '4m',
+            text: '4 metre wide',
             tag: '4',
             color: '#061d96'
         },
         '8': {
-            text: '5m+',
+            text: '5+ metre wide',
             tag: '5',
             color: '#011377'
         },
@@ -289,17 +289,17 @@ var colorMappings = {
         '10': {
             text: '1 Car Lane',
             tag: 'cars-1lane',
-            color: '#f77307'
+            color: '#ffeb3b'
         },
         '11': {
             text: '2 Car Lanes',
             tag: 'cars-2lanes',
-            color: '#f74e11'
+            color: '#ff9800'
         },
         '12': {
-            text: '3 Car Lanes',
+            text: '3+ Car Lanes',
             tag: 'cars-3lanes',
-            color: '#f72011'
+            color: '#ff5722'
         },
         '13': {
             text: 'Sidewalk',
@@ -321,52 +321,57 @@ var colorMappings = {
         '2': {
             text: '<20 km/h', //20 and under
             tag: '20',
-            color: '#00bcd4'
+            color: '#ff0'
         },
         '3': {
             text: '30 km/h',
             tag: '30',
-            color: '#03a9f4'
+            color: '#ff0'
         },
         '4': {
             text: '40 km/h',
             tag: '40 km/h',
-            color: '#2196f3'
+            color: '#fc0'
         },
         '5': {
             text: '50 km/h',
             tag: '50',
-            color: '#3f51b5'
+            color: '#fa0'
         },
         '6': {
             text: '60 km/h',
             tag: '60',
-            color: '#673ab7'
+            color: '#f70'
         },
         '7': {
             text: '70 km/h',
             tag: '70',
-            color: '#9c27b0'
+            color: '#f40'
         },
         '8': {
             text: '80 km/h',
             tag: '80',
-            color: '#f44336'
+            color: '#f00'
         },
         '9': {
             text: '90 km/h',
             tag: '90',
-            color: '#f72011'
+            color: '#f00'
         },
         '10': {
             text: '100+ km/h',
             tag: '100',
-            color: '#ef0707'
+            color: '#f00'
         },
         '11': {
             text: 'Crossing',
             tag: 'crossing',
             color: '#000000'
+        },
+        '12': {
+            text: 'Sidewalk',
+            tag: 'sidewalk',
+            color: '#8e6cb5'
         }
     },
     lit: {
@@ -511,7 +516,7 @@ function getLanes(str) {
 BR.Elevation = L.Control.Heightgraph.extend({
     options: {
         width: $('#map').outerWidth(),
-        height: 150,
+        height: 180,
         margins: {
             top: 20,
             right: 30,
@@ -596,8 +601,13 @@ BR.Elevation = L.Control.Heightgraph.extend({
                 if (['footway', 'path', 'cycleway', 'steps', 'pedestrian'].includes(val)) {
                     curVal = 'no_cars';
                 }
-                if (val == 'footway' && getValue(str, 'footway') == 'crossing') {
-                    curVal = 'crossing';
+                if (val == 'footway') {
+                    if (getValue(str, 'footway') == 'crossing') {
+                        curVal = 'crossing';
+                    }
+                    if (getValue(str, 'footway') == 'sidewalk') {
+                        curVal = 'sidewalk';
+                    }
                 }
             }
             if (tag == 'highway') {

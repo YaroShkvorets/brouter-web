@@ -2,6 +2,7 @@ BR.confLayers.getPropertyOverrides = function() {
     return {
         'standard': {
             'name': i18next.t('map.layer.osm'),
+            'nameShort': 'Edit this map',
             'attribution': {
                 'html': '&copy; <a target="_blank" href="https://www.openstreetmap.org/copyright">openstreetmap.org</a>, <a target="_blank" href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA 2.0</a>'
             },
@@ -9,10 +10,11 @@ BR.confLayers.getPropertyOverrides = function() {
         },
         'OpenTopoMap': {
             'name': i18next.t('map.layer.topo'),
+            'nameShort': 'Edit this map',
             'attribution': {
                 'html': '&copy; <a target="_blank" href="https://opentopomap.org/about#verwendung">OpenTopoMap</a>, <a target="_blank" href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA 3.0</a>; <a target="_blank" href="http://viewfinderpanoramas.org">SRTM</a>'
             },
-            'mapUrl': 'https://opentopomap.org/#map={zoom}/{lat}/{lon}'
+            'mapUrl': 'https://www.openstreetmap.org/#map={zoom}/{lat}/{lon}'
         },
         'Stamen.Terrain': {
             'name': i18next.t('map.layer.stamen-terrain'),
@@ -26,7 +28,10 @@ BR.confLayers.getPropertyOverrides = function() {
             'mapUrl': 'http://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9'
         },
         'wikimedia-map': {
-            'mapUrl': 'https://maps.wikimedia.org/#{zoom}/{lat}/{lon}'
+            'name': 'Wikimedia Map',
+            'nameShort': 'Edit this map',
+            //'mapUrl': 'https://maps.wikimedia.org/#{zoom}/{lat}/{lon}'
+            'mapUrl': 'https://www.openstreetmap.org/#{zoom}/{lat}/{lon}'
         },
         'HDM_HOT': {
             'nameShort': 'HOT',
