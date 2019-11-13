@@ -10,11 +10,6 @@ var colorMappings = {
             tag: 'residential',
             color: '#ff0'
         },
-        '2': {
-            text: 'Service',
-            tag: 'service',
-            color: '#fc0'
-        },
         '3': {
             text: 'Minor',
             tag: 'unclassified',
@@ -84,6 +79,26 @@ var colorMappings = {
             text: 'Sidewalk',
             tag: 'sidewalk',
             color: '#8e6cb5'
+        },
+        '17': {
+            text: 'Pedestrian',
+            tag: 'pedestrian',
+            color: '#39d43f'
+        },
+        '2': {
+            text: 'Service',
+            tag: 'service',
+            color: '#fc0'
+        },
+        '18': {
+            text: 'Driveway',
+            tag: 'driveway',
+            color: '#fc0'
+        },
+        '19': {
+            text: 'Parking aisle',
+            tag: 'parking_aisle',
+            color: '#fc0'
         }
     },
     cycleway: {
@@ -287,17 +302,17 @@ var colorMappings = {
             color: '#000000'
         },
         '10': {
-            text: '1 Car Lane',
+            text: '1 car lane',
             tag: 'cars-1lane',
             color: '#ffeb3b'
         },
         '11': {
-            text: '2 Car Lanes',
+            text: '2 car lanes',
             tag: 'cars-2lanes',
             color: '#ff9800'
         },
         '12': {
-            text: '3+ Car Lanes',
+            text: '3+ car lanes',
             tag: 'cars-3lanes',
             color: '#ff5722'
         },
@@ -629,6 +644,15 @@ BR.Elevation = L.Control.Heightgraph.extend({
                 if (curVal == 'primary_link') {
                     curVal = 'primary';
                 }
+                if (curVal == 'service') {
+                    const val = getValue(str, 'service');
+                    if (val == 'driveway') {
+                        curVal = 'driveway';
+                    }
+                    if (val == 'parking_aisle') {
+                        curVal = 'parking_aisle';
+                    }
+                }
             }
             if (tag == 'cycleway') {
                 if (curVal == '') {
@@ -818,7 +842,7 @@ BR.Elevation = L.Control.Heightgraph.extend({
         ret.push(this.buildProfile(steps, coords, 'width', 'Width'));
         ret.push(this.buildProfile(steps, coords, 'surface', 'Surface'));
         ret.push(this.buildProfile(steps, coords, 'maxspeed', 'Speed Limit'));
-        ret.push(this.buildProfile(steps, coords, 'lit', 'Lit'));
+        ret.push(this.buildProfile(steps, coords, 'lit', 'Street Lights'));
         ret.push(this.buildProfile(steps, coords, 'winter_service', 'Snow Plowing'));
         return ret;
     },
