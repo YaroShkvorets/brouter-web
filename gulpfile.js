@@ -2,7 +2,7 @@ var gulp = require('gulp');
 var concat = require('gulp-concat');
 var postcss = require('gulp-postcss');
 var autoprefixer = require('autoprefixer');
-var uglify = require('gulp-uglify');
+var uglify = require('gulp-uglify-es').default;
 var sourcemaps = require('gulp-sourcemaps');
 var gulpDebug = require('gulp-debug');
 var mainNpmFiles = require('npmfiles');
@@ -55,18 +55,13 @@ var paths = {
             'js/LayersConfig.js',
             'js/router/BRouter.js',
             'Leaflet.Heightgraph/src/L.Control.Heightgraph.js',
-            'Leaflet.Sliders/src/L.Control.Sliders.js',
             'js/plugin/*.js',
             'js/control/*.js',
             'js/index.js'
         ]),
     styles: mainNpmFiles()
         .filter(f => RegExp('.*\\.css', 'i').test(f) && !RegExp('.*\\.min\\.css', 'i').test(f))
-        .concat([
-            'css/*.css',
-            'leaflet.heightgraph/src/L.Control.Heightgraph.css',
-            'Leaflet.Sliders/src/L.Control.Sliders.css'
-        ]),
+        .concat(['css/*.css', 'leaflet.heightgraph/src/L.Control.Heightgraph.css']),
     images: mainNpmFiles()
         .filter(f => RegExp('.*.+(png|gif|svg)', 'i').test(f))
         .concat('leaflet.heightgraph/src/images/*.svg'),
