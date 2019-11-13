@@ -5,7 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
-        <title data-i18n="title">BRouter web client</title>
+        <title data-i18n="title">Bike Ottawa Router</title>
 
         <!-- inject:css -->
         <link rel="stylesheet" href="dist/brouter-web.css" />
@@ -560,7 +560,7 @@
                             href="#tab_profile_control"
                             role="tab"
                             data-i18n="[title]sidebar.profile-control.title"
-                            title="Fine tune"
+                            title="Fine tune your route"
                             ><i class="fa fa-sliders"></i
                         ></a>
                     </li>
@@ -576,6 +576,11 @@
                     <li>
                         <a href="#tab_data" role="tab" data-i18n="[title]sidebar.data.title" title="Data"
                             ><i class="fa fa-table"></i
+                        ></a>
+                    </li>
+                    <li>
+                        <a href="#tab_about" role="tab" data-i18n="[title]sidebar.profile-control.title" title="About"
+                            ><i class="fa fa-question-circle-o"></i
                         ></a>
                     </li>
                 </ul>
@@ -736,6 +741,52 @@
                                 ><span class="leaflet-sidebar-expand"><i class="fa fa-expand"></i></span>
                             </h1>
                             <div id="itinerary" class="flexcolumn flexgrow"></div>
+                        </div>
+
+                        <div class="leaflet-sidebar-pane" id="tab_about">
+                            <h1 class="leaflet-sidebar-header">
+                                <span class="leaflet-sidebar-close"><i class="fa fa-caret-right"></i></span
+                                ><span class="leaflet-sidebar-expand"><i class="fa fa-expand"></i></span
+                                ><span data-i18n="sidebar.profilecontrol.title">About</span>
+                            </h1>
+                            <div class="leaflet-control-layers-separator"></div>
+                            <div id="about-wrapper" style="font-size:14px">
+                                <p>
+                                    Use <i class="fa fa-sliders inline-icon"></i> tab to fine tune your route based on
+                                    your preference and conditions.
+                                </p>
+                                <p>
+                                    Click <i class="fa fa-sort-up inline-icon"></i> and
+                                    <i class="fa fa-sort-down inline-icon"></i> on the bottom graph to view your route
+                                    profile.
+                                </p>
+                                <p>Export <i class="fa fa-cloud-download inline-icon"></i> your long distance ride.</p>
+                                <p>
+                                    Routing should work for entire Canada but keep in mind routing is only as good as
+                                    underlying data.
+                                </p>
+                                <p>
+                                    If you see a mistake or something missing on the map you can contribute to
+                                    OpenStreetMap to fix it - follow "Edit this map" in the bottom right corner. Map is
+                                    updated nightly.
+                                </p>
+                                <p>
+                                    In Ottawa you can click <i class="fa fa-pencil-square-o inline-icon"></i> on the
+                                    left to edit pathway properties in one click.
+                                </p>
+                                <p>
+                                    Developed by Yaro Shkvorets for Bike Ottawa. To contribute or report a problem open
+                                    an issue on
+                                    <a href="https://github.com/zzptichka/brouter-web" target="_blank">Github</a>.
+                                </p>
+                                <p>Made possible with OpenStreetMap and Bike Ottawa volunteers.</p>
+                                <p>
+                                    Powered by
+                                    <a href="https://github.com/abrensch/brouter" target="_blank">BRouter</a>, based on
+                                    <a href="https://github.com/nrenner/brouter-web" target="_blank">BRouter-web</a>.
+                                </p>
+                            </div>
+                            <div class="leaflet-control-layers-separator"></div>
                         </div>
                     </div>
                 </div>

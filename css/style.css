@@ -337,6 +337,9 @@ button.btn {
     line-height: 30px;
 }
 
+.inline-icon {
+    margin: 0 5px 0 5px;
+}
 /* smaller tab height */
 .nav > li > a {
     padding: 2px 15px;

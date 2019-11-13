@@ -326,7 +326,7 @@
         L.easyButton({
             states: [
                 {
-                    stateName: 'Open in pathways editor',
+                    stateName: 'pathways_editor',
                     icon: 'fa-pencil-square-o',
                     onClick: function() {
                         const center = map.getCenter();
@@ -339,7 +339,7 @@
                             map.getZoom();
                         window.open(url, '_blank');
                     },
-                    title: 'Pathways Editor'
+                    title: 'Pathways Editor (Ottawa only)'
                 }
             ]
         }).addTo(map);
