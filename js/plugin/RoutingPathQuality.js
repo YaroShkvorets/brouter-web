@@ -32,7 +32,7 @@ BR.RoutingPathQuality = L.Control.extend({
                         renderer: renderer
                     },
                     valueFunction: function(latLng, prevLatLng) {
-                        const deltaAltitude = latLng.alt - prevLatLng.alt, // in m
+                        var deltaAltitude = latLng.alt - prevLatLng.alt, // in m
                             distance = prevLatLng.distanceTo(latLng); // in m
                         if (distance === 0) {
                             return 0;
@@ -61,7 +61,7 @@ BR.RoutingPathQuality = L.Control.extend({
                         renderer: renderer
                     },
                     valueFunction: function(latLng) {
-                        const feature = latLng.feature;
+                        var feature = latLng.feature;
                         return (
                             feature.cost.perKm +
                             feature.cost.elev +
@@ -87,16 +87,18 @@ BR.RoutingPathQuality = L.Control.extend({
             l = keys.length;
 
         for (i = 0; i < l; ++i) {
-            const provider = this.providers[keys[i]];
-            const nextState = keys[(i + 1) % l];
+            var provider = this.providers[keys[i]];
+            var nextState = keys[(i + 1) % l];
             states.push({
                 stateName: keys[i],
                 icon: provider.icon,
                 title: provider.title,
-                onClick: function(btn) {
-                    btn.state(nextState);
-                    self.setProvider(nextState);
-                }
+                onClick: (function(state) {
+                    return function(btn) {
+                        btn.state(state);
+                        self.setProvider(state);
+                    };
+                })(nextState)
             });
         }
 
@@ -124,7 +126,7 @@ BR.RoutingPathQuality = L.Control.extend({
     _update: function(segments) {
         this._routingSegments.clearLayers();
         if (this.providers[this.selectedProvider].provider == null) return;
-        const layers = this.providers[this.selectedProvider].provider.computeLayers(segments);
+        var layers = this.providers[this.selectedProvider].provider.computeLayers(segments);
         if (layers) {
             for (var i = 0; i < layers.length; i++) {
                 this._routingSegments.addLayer(layers[i]);
@@ -143,23 +145,25 @@ var HotLineQualityProvider = L.Class.extend({
         var layers = [];
         if (segments) {
             var segmentLatLngs = [];
+            var flatLines = [];
             for (var i = 0; segments && i < segments.length; i++) {
-                const segment = segments[i];
-                segmentLatLngs.push(this._computeLatLngVals(segment));
+                var segment = segments[i];
+                var vals = this._computeLatLngVals(segment);
+                segmentLatLngs.push(vals);
+                Array.prototype.push.apply(flatLines, vals);
             }
-            const flatLines = segmentLatLngs.flat();
 
             if (flatLines.length > 0) {
-                const hotlineOptions = Object.assign(new Object(), this.hotlineOptions);
+                var hotlineOptions = L.extend({}, this.hotlineOptions);
                 if (!hotlineOptions.min && !hotlineOptions.max) {
-                    const minMax = this._calcMinMaxValues(flatLines);
+                    var minMax = this._calcMinMaxValues(flatLines);
                     hotlineOptions.min = minMax.min;
                     hotlineOptions.max = minMax.max;
                 }
 
                 for (var i = 0; i < segmentLatLngs.length; i++) {
-                    const line = segmentLatLngs[i];
-                    const hotline = L.hotline(line, hotlineOptions);
+                    var line = segmentLatLngs[i];
+                    var hotline = L.hotline(line, hotlineOptions);
                     layers.push(hotline);
                 }
             }
@@ -173,7 +177,7 @@ var HotLineQualityProvider = L.Class.extend({
             segmentLength = segmentLatLngs.length;
 
         for (var i = 0; i < segmentLength; i++) {
-            const val = this.valueFunction.call(
+            var val = this.valueFunction.call(
                 this,
                 segmentLatLngs[i],
                 segmentLatLngs[Math.max(i - 1, 0)],
@@ -193,7 +197,7 @@ var HotLineQualityProvider = L.Class.extend({
         var min = lines[0][2],
             max = min;
         for (var i = 1; lines && i < lines.length; i++) {
-            const line = lines[i];
+            var line = lines[i];
             max = Math.max(max, line[2]);
             min = Math.min(min, line[2]);
         }

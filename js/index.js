@@ -196,7 +196,7 @@
                     }
 
                     if (evt.callback) {
-                        evt.callback();
+                        evt.callback(err, profileId, evt.profileText);
                     }
                 });
             })
