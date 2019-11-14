@@ -323,7 +323,7 @@
 
         L.easyBar([dlButton, upButton]).addTo(map);
 
-        L.easyButton({
+        /*      L.easyButton({
             states: [
                 {
                     stateName: 'pathways_editor',
@@ -342,7 +342,7 @@
                     title: 'Pathways Editor (Ottawa only)'
                 }
             ]
-        }).addTo(map);
+        }).addTo(map);*/
 
         /*    map.addControl(
             new BR.OpacitySliderControl({

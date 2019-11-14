@@ -9,8 +9,29 @@ BR.Map = {
         map = new L.Map('map', {
             zoomControl: false, // add it manually so that we can translate it
             worldCopyJump: true,
-            minZoom: 7,
-            maxZoom: maxZoom
+            minZoom: 6,
+            maxZoom: maxZoom,
+            contextmenu: true,
+            contextmenuWidth: 200,
+            contextmenuItems: [
+                {
+                    text: '<i class="fa fa-external-link"></i> Open in Pathways Editor', //icon: <i class="fa fa-pencil-square-o"></i>
+                    callback: openPathways
+                },
+                {
+                    text: '<i class="fa fa-external-link"></i> Open in Winter Routes Editor',
+                    callback: openWinter
+                },
+                {
+                    text: '<i class="fa fa-external-link"></i> Open in Desire Lines Editor',
+                    callback: openDesire
+                },
+                '-',
+                {
+                    text: '<i class="fa fa-external-link"></i> Open in OpenStreetMap',
+                    callback: openOSM
+                }
+            ]
         });
 
         if (!map.restoreView()) {
@@ -139,3 +160,26 @@ BR.Map = {
         }
     }
 };
+
+function openPathways(e) {
+    const url =
+        'https://maps.bikeottawa.ca/pathways/?lat=' + e.latlng.lat + '&lng=' + e.latlng.lng + '&zoom=' + this.getZoom();
+    window.open(url, '_blank');
+}
+
+function openWinter(e) {
+    const url =
+        'https://maps.bikeottawa.ca/winter/?lat=' + e.latlng.lat + '&lng=' + e.latlng.lng + '&zoom=' + this.getZoom();
+    window.open(url, '_blank');
+}
+
+function openDesire(e) {
+    const url =
+        'https://maps.bikeottawa.ca/desire/?lat=' + e.latlng.lat + '&lng=' + e.latlng.lng + '&zoom=' + this.getZoom();
+    window.open(url, '_blank');
+}
+
+function openOSM(e) {
+    const url = 'https://www.openstreetmap.org/#map=' + this.getZoom() + '/' + e.latlng.lat + '/' + e.latlng.lng;
+    window.open(url, '_blank');
+}

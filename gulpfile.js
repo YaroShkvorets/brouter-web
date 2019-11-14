@@ -61,7 +61,11 @@ var paths = {
         ]),
     styles: mainNpmFiles()
         .filter(f => RegExp('.*\\.css', 'i').test(f) && !RegExp('.*\\.min\\.css', 'i').test(f))
-        .concat(['css/*.css', 'Leaflet.Heightgraph/src/L.Control.Heightgraph.css']),
+        .concat([
+            'css/*.css',
+            'Leaflet.Heightgraph/src/L.Control.Heightgraph.css',
+            'node_modules/leaflet-contextmenu/dist/leaflet.contextmenu.css'
+        ]),
     images: mainNpmFiles()
         .filter(f => RegExp('.*.+(png|gif|svg)', 'i').test(f))
         .concat('Leaflet.Heightgraph/src/images/*.svg'),
