@@ -762,21 +762,18 @@ BR.Elevation = L.Control.Heightgraph.extend({
                         }
                     }
                 }
-                if (curVal == '') {
-                    if (val == 'footway') {
-                        if (getValue(str, 'footway') == 'crossing') {
-                            curVal = 'crossing';
-                        }
-                        if (getValue(str, 'footway') == 'sidewalk') {
-                            curVal = 'sidewalk';
-                        }
-                        if (getValue(str, 'highway') == 'track') {
-                            curVal = 'no';
-                        }
-                    }
+                if (val == 'track') {
+                    curVal = 'no';
                 }
 
-                val = getValue(str, 'surface');
+                if (val == 'footway') {   //override winter_service for sidewalks and crsossings
+                    if (getValue(str, 'footway') == 'crossing') {
+                        curVal = 'crossing';
+                    }
+                    if (getValue(str, 'footway') == 'sidewalk') {
+                        curVal = 'sidewalk';
+                    }
+                }
             }
             key = parseInt(getKeyByValue(colorMappings[tag], curVal));
 
