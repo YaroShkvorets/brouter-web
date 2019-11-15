@@ -19,6 +19,10 @@ BR.Map = {
                     callback: openPathways
                 },
                 {
+                    text: '<i class="fa fa-external-link"></i> Open in Roads Editor', //icon: <i class="fa fa-pencil-square-o"></i>
+                    callback: openRoads
+                },
+                {
                     text: '<i class="fa fa-external-link"></i> Open in Winter Routes Editor',
                     callback: openWinter
                 },
@@ -166,7 +170,11 @@ function openPathways(e) {
         'https://maps.bikeottawa.ca/pathways/?lat=' + e.latlng.lat + '&lng=' + e.latlng.lng + '&zoom=' + this.getZoom();
     window.open(url, '_blank');
 }
-
+function openRoads(e) {
+    const url =
+        'https://maps.bikeottawa.ca/lts-map/?lat=' + e.latlng.lat + '&lng=' + e.latlng.lng + '&zoom=' + this.getZoom();
+    window.open(url, '_blank');
+}
 function openWinter(e) {
     const url =
         'https://maps.bikeottawa.ca/winter/?lat=' + e.latlng.lat + '&lng=' + e.latlng.lng + '&zoom=' + this.getZoom();

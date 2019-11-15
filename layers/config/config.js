@@ -3,7 +3,7 @@ BR.confLayers = {};
 BR.confLayers.defaultBaseLayers = [
     'wikimedia-map',
     'Esri.WorldImagery',
-    '1010',  //OpenStreetMap.se
+    'cyclosm',
     'standard',
     '1065',  //hike & bike
     '1059' //public transit
