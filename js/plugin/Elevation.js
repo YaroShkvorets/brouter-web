@@ -823,6 +823,7 @@ BR.Elevation = L.Control.Heightgraph.extend({
         return ret;
     },
     buildGeojson: function(segments) {
+        if(segments.length==0){return []}
         const ret = [];
         let steps = [];
         let coords = [segments[0].feature.geometry.coordinates[0]];
@@ -852,7 +853,7 @@ BR.Elevation = L.Control.Heightgraph.extend({
             g.parentNode.appendChild(g);
         }
 
-        if (track && track.getLatLngs().length > 0) {
+        if (track/* && track.getLatLngs().length > 0*/) {
             //this.addData(track.toGeoJSON(), layer);
             const data = this.buildGeojson(segments);
             this.addData(data);
