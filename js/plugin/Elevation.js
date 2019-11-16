@@ -706,7 +706,7 @@ BR.Elevation = L.Control.Heightgraph.extend({
             if (tag == 'width') {
                 //tweaks to take into account road type, etc
                 let val = getValue(str, 'highway');
-                if (!['footway', 'path', 'cycleway', 'steps'].includes(val)) {
+                if (!['footway', 'path', 'cycleway', 'steps','pedestrian'].includes(val)) {
                     val = getLanes(str);
                     switch (val) {
                         case 1:
@@ -752,7 +752,7 @@ BR.Elevation = L.Control.Heightgraph.extend({
             }
             if (tag == 'winter_service') {
                 let val = getValue(str, 'highway');
-                if (!['footway', 'path', 'cycleway', 'steps'].includes(val)) {
+                if (!['footway', 'path', 'cycleway', 'steps','pedestrian'].includes(val)) {
                     curVal = 'cars';
                 } else {
                     if (curVal == '') {
