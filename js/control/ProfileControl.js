@@ -111,7 +111,11 @@ BR.ProfileControl = L.Evented.extend({
 
     _makeControl: function(sliderId, sliderTitle, hint) {
         var filter = new RegExp(this.escapeRegex(sliderId) + '(\\s+)?=(\\s+)?(\\d+(\\.\\d+)?)', 'g');
-        var defaultValue = parseFloat(filter.exec(this.profileText)[3]);
+        var match = filter.exec(this.profileText);
+        if(!Array.isArray(match) || match.length < 3){  //this profile has no such param
+          return;
+        }
+        var defaultValue = parseFloat(match[3]);
         this.profileParams[sliderId] = defaultValue;
         var slider = this._makeSlider(sliderId, hint, defaultValue);
         var div = document.createElement('div');
