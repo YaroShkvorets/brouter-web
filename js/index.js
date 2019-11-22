@@ -255,12 +255,12 @@
             if(segments.length==0){
               $('#elevation-chart').removeClass('show')
               $('#elevation-btn').removeClass('active');
+              // we must fetch tiles that are located behind elevation-chart
+              map._onResize();
             }
             else{
               $('#elevation-chart').addClass('show')
               $('#elevation-btn').addClass('active');
-              // we must fetch tiles that are located behind elevation-chart
-              map._onResize();
             }
 
             routingPathQuality.update(track, segmentsLayer);
