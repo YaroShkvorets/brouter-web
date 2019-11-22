@@ -252,6 +252,17 @@
                 segmentsLayer = routing._segments;
 
             elevation.update(track, segments /*segmentsLayer*/);
+            if(segments.length==0){
+              $('#elevation-chart').removeClass('show')
+              $('#elevation-btn').removeClass('active');
+            }
+            else{
+              $('#elevation-chart').addClass('show')
+              $('#elevation-btn').addClass('active');
+              // we must fetch tiles that are located behind elevation-chart
+              map._onResize();
+            }
+
             routingPathQuality.update(track, segmentsLayer);
             if (BR.conf.transit) {
                 itinerary.update(track, segments);
@@ -459,7 +470,7 @@
             // we must fetch tiles that are located behind elevation-chart
             map._onResize();
         });
-
+  /*
         var onHide = function() {
             if (this.id && BR.Util.localStorageAvailable()) {
                 localStorage.removeItem(this.id);
@@ -478,7 +489,7 @@
                 if (this.id && BR.Util.localStorageAvailable() && localStorage[this.id] === 'true') {
                     $(this).collapse('show');
                 }
-            });
+            }); */
     }
 
     L.AwesomeMarkers.Icon.prototype.options.prefix = 'fa';

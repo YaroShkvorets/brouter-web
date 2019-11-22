@@ -846,12 +846,7 @@ BR.Elevation = L.Control.Heightgraph.extend({
     },
     update: function(track, segments) {
         //this.clear();
-        if(segments.length==0){
-          $('#elevation-chart').removeClass('show')
-        }
-        else{
-          $('#elevation-chart').addClass('show')
-        }
+        
         // bring height indicator to front, because of track casing in BR.Routing
         if (this._mouseHeightFocus) {
             var g = this._mouseHeightFocus[0][0].parentNode;
