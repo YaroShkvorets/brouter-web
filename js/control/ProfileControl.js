@@ -22,10 +22,18 @@ BR.ProfileControl = L.Evented.extend({
         button.blur();
     },
 
-    update: function(options) {
+    setProfileParams: function(params){
+      this.profileParams = params;
+    },
+
+    update: function(options, params=[]) {
         var profileName = options.profile,
             profileUrl;
-
+        for (let key of Object.keys(params)) {
+            if(key.indexOf("PenaltyParam")!=-1){
+              this.profileParams[key] = parseFloat(params[key]);
+            }
+        }
         this.profileName = profileName;
         if (profileName && BR.conf.profilesUrl) {
             if (!(profileName in this.cache)) {
@@ -62,6 +70,14 @@ BR.ProfileControl = L.Evented.extend({
 
     escapeRegex: function(value) {
         return value.replace(/[\-\[\]{}()*+?.,\\\^$|#\s]/g, '\\$&');
+    },
+
+    getParamsUrl: function() {
+      var ret = '';
+      for (let key of Object.keys(this.profileParams)) {
+        ret += '&'+key + '=' + this.profileParams[key];
+      }
+      return ret;
     },
 
     _generateProfile: function() {
@@ -115,7 +131,7 @@ BR.ProfileControl = L.Evented.extend({
         if(!Array.isArray(match) || match.length < 3){  //this profile has no such param
           return;
         }
-        var defaultValue = parseFloat(match[3]);
+        var defaultValue = this.profileParams[sliderId]==null ? parseFloat(match[3]) : this.profileParams[sliderId];
         this.profileParams[sliderId] = defaultValue;
         var slider = this._makeSlider(sliderId, hint, defaultValue);
         var div = document.createElement('div');

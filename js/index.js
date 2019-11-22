@@ -172,6 +172,7 @@
         elevation = new BR.Elevation();
 
         profileControl = new BR.ProfileControl();
+
         profile = new BR.Profile();
         [profile, profileControl].forEach(control =>
             control.on('update', function(evt) {
@@ -351,12 +352,24 @@
                 callback: L.bind(routing.setOpacity, routing)
             })
         ); */
-
+        var url2params = function(s) {
+            s = s.replace(/;/g, '|');
+            var p = {};
+            var sep = '&';
+            if (s.search('&amp;') !== -1) sep = '&amp;';
+            var params = s.split(sep);
+            for (var i = 0; i < params.length; i++) {
+                var tmp = params[i].split('=');
+                if (tmp.length !== 2) continue;
+                p[tmp[0]] = decodeURIComponent(tmp[1]);
+            }
+            return p;
+        };
         // initial option settings (after controls are added and initialized with onAdd)
         router.setOptions(nogos.getOptions());
         router.setOptions(routingOptions.getOptions());
         profile.update(routingOptions.getOptions());
-        profileControl.update(routingOptions.getOptions());
+        profileControl.update(routingOptions.getOptions(), url2params(location.hash.substring(location.hash.indexOf('&'))));
 
         // restore active layers from local storage when called without hash
         // (check before hash plugin init)
@@ -365,19 +378,7 @@
         }
 
         var onHashChangeCb = function(url) {
-            var url2params = function(s) {
-                s = s.replace(/;/g, '|');
-                var p = {};
-                var sep = '&';
-                if (s.search('&amp;') !== -1) sep = '&amp;';
-                var params = s.split(sep);
-                for (var i = 0; i < params.length; i++) {
-                    var tmp = params[i].split('=');
-                    if (tmp.length !== 2) continue;
-                    p[tmp[0]] = decodeURIComponent(tmp[1]);
-                }
-                return p;
-            };
+
             if (url == null) return;
 
             var opts = router.parseUrlParams(url2params(url));
@@ -385,7 +386,7 @@
             routingOptions.setOptions(opts);
             nogos.setOptions(opts);
             profile.update(opts);
-            profileControl.update(opts);
+            profileControl.update(opts, url2params(url));
 
             if (opts.lonlats) {
                 routing.draw(false);
@@ -411,7 +412,7 @@
         // this callback is used to append anything in URL after L.Hash wrote #map=zoom/lat/lng/layer
         urlHash.additionalCb = function() {
             var url = router.getUrl(routing.getWaypoints(), pois.getMarkers(), null).substr('brouter?'.length + 1);
-
+            url += profileControl.getParamsUrl()
             // by default brouter use | as separator. To make URL more human-readable, we remplace them with ; for users
             url = url.replace(/\|/g, ';');
 
