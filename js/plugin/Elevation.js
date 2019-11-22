@@ -345,7 +345,7 @@ var colorMappings = {
         },
         '4': {
             text: '40 km/h',
-            tag: '40 km/h',
+            tag: '40',
             color: '#fc0'
         },
         '5': {
@@ -846,7 +846,7 @@ BR.Elevation = L.Control.Heightgraph.extend({
     },
     update: function(track, segments) {
         //this.clear();
-        
+
         // bring height indicator to front, because of track casing in BR.Routing
         if (this._mouseHeightFocus) {
             var g = this._mouseHeightFocus[0][0].parentNode;
