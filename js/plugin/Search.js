@@ -1,11 +1,15 @@
 BR.Search = L.Control.Geocoder.extend({
     options: {
         geocoder: new L.Control.Geocoder.LatLng({
-            next: new L.Control.Geocoder.Nominatim({
-                serviceUrl: 'https://nominatim.openstreetmap.org/',
+            next: new L.Control.Geocoder.mapbox(
+              'pk.eyJ1IjoiYmlrZW90dGF3YSIsImEiOiJjamdqaWxrN3gwZXQ4MnFxbjAwZXRpbG8zIn0.XhAdk2ASwdipubccCWTfoQ',
+              {
+                //serviceUrl: 'https://nominatim.openstreetmap.org/',
                 geocodingQueryParams: {
-                    //"viewbox": "-76.315430,45.049432,-75.095948,45.670502"
-                    countrycodes: 'ca'
+                    limit: 10,
+                    //bbox: [-76.385193,44.963826,-75.011902,45.614998],
+                    country: 'ca',
+                    proximity: '-75.7061857,45.396683'
                 }
             }),
             sizeInMeters: 800
