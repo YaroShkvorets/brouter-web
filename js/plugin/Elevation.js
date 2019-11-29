@@ -752,7 +752,7 @@ BR.Elevation = L.Control.Heightgraph.extend({
             }
             if (tag == 'winter_service') {
                 let val = getValue(str, 'highway');
-                if (!['footway', 'path', 'cycleway', 'steps','pedestrian'].includes(val)) {
+                if (curVal!='no' && !['footway', 'path', 'cycleway', 'steps','pedestrian'].includes(val)) {
                     curVal = 'cars';
                 } else {
                     if (curVal == '') {
