@@ -306,6 +306,30 @@
 
         routingPathQuality.addTo(map);
 
+        L.easyButton({
+          states: [{
+                  stateName: 'disabled',
+                  icon:      '<img src="images/traffic-light-solid.svg" style="width:12px">',               // and define its properties
+                  //icon:      'fa-pencil',
+                  title:     'Show Stops and Lights',
+                  onClick: function(btn, map) {
+                      btn.state('enabled');
+                      routing.showStops();
+                  }
+              }, {
+                  stateName: 'enabled',
+                  icon:      '<img src="images/traffic-light-active.svg" style="width:12px;">',
+                  //icon:      'fa-pencil active',
+                  title:     'Hide Stops and Lights',
+                  onClick: function(btn, map) {
+                      btn.state('disabled');
+                      routing.hideStops();
+                  }
+          }]
+        }).addTo(map);
+
+        //L.easyBar([stops, routingPathQuality]).addTo(map);
+
         var dlButton = L.easyButton({
             states: [
                 {

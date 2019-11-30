@@ -68,7 +68,8 @@ var paths = {
         ]),
     images: mainNpmFiles()
         .filter(f => RegExp('.*.+(png|gif|svg)', 'i').test(f))
-        .concat('Leaflet.Heightgraph/src/images/*.svg'),
+        .concat('Leaflet.Heightgraph/src/images/*.svg')
+        .concat('images/*'),
     fonts: mainNpmFiles().filter(f => RegExp('font-awesome/fonts/.*', 'i').test(f)),
     locales: 'locales/*.json',
     layers: 'layers/**/*.geojson',

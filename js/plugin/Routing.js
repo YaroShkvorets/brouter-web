@@ -37,10 +37,12 @@ BR.Routing = L.Routing.extend({
 
         this.on('routing:routeWaypointStart routing:rerouteAllSegmentsStart', function(evt) {
             this._removeDistanceMarkers();
+            this._removeStopMarkers();
         });
 
         this.on('routing:routeWaypointEnd routing:setWaypointsEnd routing:rerouteAllSegmentsEnd', function(evt) {
             this._updateDistanceMarkers(evt);
+            this._updateStopMarkers(evt);
         });
 
         // turn line mouse marker off while over waypoint marker
@@ -169,6 +171,8 @@ BR.Routing = L.Routing.extend({
         // enable drawing mode
         this.draw(true);
 
+        showingStops = false;
+
         return container;
     },
 
@@ -273,6 +277,45 @@ BR.Routing = L.Routing.extend({
         }
     },
 
+    //returns array of stops/traffic signals with coords
+    getStops: function() {
+        var segments = this.getSegments();
+
+        if(segments.length==0){return []}
+        const ret = [];
+        let steps = [];
+        for (let segment of segments) {
+            steps = steps.concat(segment.feature.properties.messages.slice(1));
+        }
+        let distToLastLight = 1000;
+            distToLastStop = 1000;
+        for(let step of steps){
+          const obj = {}
+          distToLastLight+=parseInt(step[3]);
+          distToLastStop+=parseInt(step[3]);
+          if(step[10].indexOf('highway=stop')!=-1){
+            if(step[10].indexOf('direction')==-1
+              || step[10].indexOf('direction=backward')!=-1 && step[9].indexOf('reversedirection')!=-1
+              || step[10].indexOf('direction=forward')!=-1 && step[9].indexOf('reversedirection')==-1)
+            {
+              if(distToLastStop > 30){
+                ret.push({lng: parseFloat(step[0])/1000000, lat: parseFloat(step[1])/1000000, type:'stop'});
+                distToLastStop = 0;
+              }
+            }
+          }
+          if(step[10].indexOf('crossing=traffic_signals')!=-1
+            || step[10].indexOf('highway=traffic_signals')!=-1){
+            if(distToLastLight > 100){
+              ret.push({lng: parseFloat(step[0])/1000000, lat: parseFloat(step[1])/1000000, type:'light'});
+              distToLastLight = 0;
+            }
+          }
+        }
+
+        return ret;
+    },
+
     // patch to fix error when line is null or error line
     // (when called while still segments to calculate, e.g. permalink or fast drawing)
     toPolyline: function() {
@@ -373,5 +416,32 @@ BR.Routing = L.Routing.extend({
             this._distanceMarkers = new L.DistanceMarkers(this.toPolyline(), this._map, distanceMarkersOpts);
             this._map.addLayer(this._distanceMarkers);
         }
+    },
+
+    _removeStopMarkers: function() {
+        if (this._map && this._stopMarkers) {
+            this._map.removeLayer(this._stopMarkers);
+        }
+    },
+
+    _updateStopMarkers: function(e) {
+        this._removeStopMarkers();
+
+        if (this._map) {
+            this._stopMarkers = new L.StopMarkers(this.getStops(), this._map);
+            if(showingStops){
+              this._map.addLayer(this._stopMarkers);
+            }
+        }
+    },
+
+    showStops: function() {
+      showingStops = true;
+      this._map.addLayer(this._stopMarkers);
+    },
+
+    hideStops: function(){
+      showingStops = false;
+      this._map.removeLayer(this._stopMarkers);
     }
 });

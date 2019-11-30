@@ -104,7 +104,7 @@ BR.RoutingPathQuality = L.Control.extend({
 
         this.routingPathButton = new L.easyButton({
             states: states
-        }).addTo(map);
+        })//.addTo(map);
         return new L.DomUtil.create('div');
     },
 
