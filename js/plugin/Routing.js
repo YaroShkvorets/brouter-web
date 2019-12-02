@@ -43,6 +43,8 @@ BR.Routing = L.Routing.extend({
         this.on('routing:routeWaypointEnd routing:setWaypointsEnd routing:rerouteAllSegmentsEnd', function(evt) {
             this._updateDistanceMarkers(evt);
             this._updateStopMarkers(evt);
+            $('#stats_stops').html(this._statsStops); //updating stats here because this method called after map update
+            $('#stats_traffic_lights').html(this._statsLights);
         });
 
         // turn line mouse marker off while over waypoint marker
@@ -171,7 +173,9 @@ BR.Routing = L.Routing.extend({
         // enable drawing mode
         this.draw(true);
 
-        showingStops = false;
+        this._showingStops = false;
+        this._statsStops = 0;
+        this._statsLights = 0;
 
         return container;
     },
@@ -280,6 +284,8 @@ BR.Routing = L.Routing.extend({
     //returns array of stops/traffic signals with coords
     getStops: function() {
         var segments = this.getSegments();
+        this._statsStops = 0;
+        this._statsLights = 0;
 
         if(segments.length==0){return []}
         const ret = [];
@@ -301,14 +307,16 @@ BR.Routing = L.Routing.extend({
               if(distToLastStop > 30){
                 ret.push({lng: parseFloat(step[0])/1000000, lat: parseFloat(step[1])/1000000, type:'stop'});
                 distToLastStop = 0;
+                this._statsStops++;
               }
             }
           }
           if(step[10].indexOf('crossing=traffic_signals')!=-1
             || step[10].indexOf('highway=traffic_signals')!=-1){
-            if(distToLastLight > 100){
+            if(distToLastLight > 60){
               ret.push({lng: parseFloat(step[0])/1000000, lat: parseFloat(step[1])/1000000, type:'light'});
               distToLastLight = 0;
+              this._statsLights++;
             }
           }
         }
@@ -429,19 +437,19 @@ BR.Routing = L.Routing.extend({
 
         if (this._map) {
             this._stopMarkers = new L.StopMarkers(this.getStops(), this._map);
-            if(showingStops){
+            if(this._showingStops){
               this._map.addLayer(this._stopMarkers);
             }
         }
     },
 
     showStops: function() {
-      showingStops = true;
+      this._showingStops = true;
       this._map.addLayer(this._stopMarkers);
     },
 
     hideStops: function(){
-      showingStops = false;
+      this._showingStops = false;
       this._map.removeLayer(this._stopMarkers);
     }
 });
