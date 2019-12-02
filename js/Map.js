@@ -97,6 +97,19 @@ BR.Map = {
             baseLayers[i18next.t('map.layer.digitalglobe')] = recent;
         }
 
+        if (BR.keys.mapbox) {
+            var recent = new L.tileLayer(
+                'https://api.mapbox.com/styles/v1/mapbox/satellite-streets-v9/tiles/{z}/{x}/{y}?access_token=' +
+                    BR.keys.mapbox,
+                {
+                    minZoom: 1,
+                    maxZoom: 19,
+                    //attribution: '&copy; <a href="https://www.digitalglobe.com/platforms/mapsapi">DigitalGlobe</a> (<a href="https://bit.ly/mapsapiview">Terms of Use</a>)'
+                }
+            );
+            baseLayers['Mapbox Satellite'] = recent;
+        }
+
         if (BR.conf.clearBaseLayers) {
             baseLayers = {};
         }
