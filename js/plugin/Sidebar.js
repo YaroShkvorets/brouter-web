@@ -6,7 +6,7 @@ BR.Sidebar = L.Control.Sidebar.extend({
         container: 'sidebar',
         tabContainer: 'sidebarTabs',
         autopan: false,
-        defaultTabId: '',
+        defaultTabId: 'tab_profile_control',
 
         // Tabs to be notified when shown or hidden
         // (tab div id -> object implementing show/hide methods)
@@ -61,8 +61,8 @@ BR.Sidebar = L.Control.Sidebar.extend({
             if (tabId === 'true') {
                 tabId = this.options.defaultTabId;
             } else if (tabId === null) {
-                // not set: closed by default for new users
-                tabId = '';
+                // not set: open default tab for new users
+                tabId = this.options.defaultTabId;
             }
             if (tabId !== '') {
                 this.open(tabId);
