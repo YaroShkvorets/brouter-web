@@ -78,6 +78,7 @@ BR.PoiMarkers = L.Control.extend({
         var self = this;
         bootbox.prompt({
             title: i18next.t('map.enter-poi-name'),
+            message: '<p>After adding points of interest to the map you can share you route with someone by sending them the URL of this page and they will see these POIs along your route</p>',
             callback: function(result) {
                 if (result !== null) {
                     self.addMarker(e.latlng, result);
