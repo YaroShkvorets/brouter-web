@@ -6,7 +6,7 @@ BR.Sidebar = L.Control.Sidebar.extend({
         container: 'sidebar',
         tabContainer: 'sidebarTabs',
         autopan: false,
-        defaultTabId: 'tab_profile_control',
+        defaultTabId: '',
 
         // Tabs to be notified when shown or hidden
         // (tab div id -> object implementing show/hide methods)

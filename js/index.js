@@ -279,7 +279,7 @@
         elevation.addBelow(map);
 
         sidebar = BR.sidebar({
-            defaultTabId: BR.conf.transit ? 'tab_itinerary' : 'tab_profile',
+            defaultTabId: BR.conf.transit ? 'tab_itinerary' : 'tab_profile_control',
             listeningTabs: {
                 tab_profile: profile,
                 tab_data: trackMessages,
