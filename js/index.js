@@ -210,7 +210,7 @@
             requestUpdate: requestUpdate
         });
 
-        routingPathQuality = new BR.RoutingPathQuality(map, layersControl);
+        //routingPathQuality = new BR.RoutingPathQuality(map, layersControl);
 
         routing = new BR.Routing({
             routing: {
@@ -263,7 +263,7 @@
               $('#elevation-btn').addClass('active');
             }
 
-            routingPathQuality.update(track, segmentsLayer);
+            //routingPathQuality.update(track, segmentsLayer);
             if (BR.conf.transit) {
                 itinerary.update(track, segments);
             } else {
@@ -304,7 +304,7 @@
 
         BR.tracksLoader(map, layersControl, routing);
 
-        routingPathQuality.addTo(map);
+        //routingPathQuality.addTo(map);
 
         L.easyButton({
           states: [{
