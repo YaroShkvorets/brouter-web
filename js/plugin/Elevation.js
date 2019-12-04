@@ -1,3 +1,13 @@
+const _profiles = [
+  ['winter_service', 'Snow Plowing'],
+  ['highway', 'Way Type'],
+  ['cycleway', 'Cycling Facility'],
+  ['width', 'Width'],
+  ['surface', 'Surface'],
+  ['maxspeed', 'Speed Limit'],
+  ['lit', 'Street Lights']
+];
+
 var colorMappings = {
     highway: {
         '0': {
@@ -430,7 +440,7 @@ var colorMappings = {
         '3': {
             text: 'Shared with cars',
             tag: 'cars',
-            color: '#484848'
+            color: '#777777'
         },
         '4': {
             text: 'Sidewalk, so likely yes',
@@ -835,13 +845,9 @@ BR.Elevation = L.Control.Heightgraph.extend({
             steps[steps.length - 1][1] = coords[coords.length - 1][1] * 1000000;
         }
 
-        ret.push(this.buildProfile(steps, coords, 'highway', 'Way Type'));
-        ret.push(this.buildProfile(steps, coords, 'cycleway', 'Cycling Facility'));
-        ret.push(this.buildProfile(steps, coords, 'width', 'Width'));
-        ret.push(this.buildProfile(steps, coords, 'surface', 'Surface'));
-        ret.push(this.buildProfile(steps, coords, 'maxspeed', 'Speed Limit'));
-        ret.push(this.buildProfile(steps, coords, 'lit', 'Street Lights'));
-        ret.push(this.buildProfile(steps, coords, 'winter_service', 'Snow Plowing'));
+        for(let profile of _profiles){
+          ret.push(this.buildProfile(steps, coords, profile[0], profile[1]));
+        }
         return ret;
     },
     update: function(track, segments) {
