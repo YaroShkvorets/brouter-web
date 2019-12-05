@@ -262,7 +262,10 @@
               $('#elevation-chart').addClass('show')
               $('#elevation-btn').addClass('active');
             }
-
+            if(segments.length==1){
+              drawButton.state('activate-draw');  //stop draw (people usually route A->B)
+              routing.draw(false);
+            }
             //routingPathQuality.update(track, segmentsLayer);
             if (BR.conf.transit) {
                 itinerary.update(track, segments);
