@@ -838,7 +838,7 @@
                             <abbr data-i18n="[title]footer.hours;footer.hours-abbrev" title="hours">h</abbr>
                         </p>
                     </li>
-                    <li>
+                    <li class="d-none">
                         <div class="text-muted small d-none d-sm-block">
                             <span data-i18n="footer.total-energy">Total Energy</span>
                             |
@@ -871,7 +871,7 @@
                             <abbr data-i18n="[title]footer.meter;footer.meter-abbrev" title="meters">m</abbr>
                         </p>
                     </li>
-                    <li>
+                    <li class="d-sm-inline-block d-none">
                         <div class="text-muted small d-none d-sm-block">
                             <span data-i18n="footer.cost">Cost</span> |
                             <span data-i18n="footer.mean-cost-factor">Mean cost factor</span>
@@ -887,8 +887,8 @@
                             <span><img src="images/stop-color.svg" style="height: 16px"></span>
                         </div>
                         <p class="stats-label">
-                            <span id="stats_traffic_lights">-</span> |
-                            <span id="stats_stops">-</span>
+                            <span id="stats_traffic_lights">-</span><span class="d-sm-none"><img src="images/traffic-light-color.svg" style="height: 16px"></span> |
+                            <span id="stats_stops">-</span><span class="d-sm-none"><img src="images/stop-color.svg" style="height: 16px"></span>
                         </p>
                     </li>
                 </ul>
