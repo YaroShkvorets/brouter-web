@@ -551,7 +551,7 @@ BR.Elevation = L.Control.Heightgraph.extend({
         theme: 'steelblue-theme',
         mappings: colorMappings,
         expand: true,
-        xTicks: 10,
+        xTicks: $('#map').outerWidth()/100,
         yTicks: 5
     },
 
