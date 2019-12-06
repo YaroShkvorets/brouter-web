@@ -34,6 +34,10 @@ BR.Map = {
                 {
                     text: '<i class="fa fa-external-link"></i> Open in OpenStreetMap',
                     callback: openOSM
+                },
+                {
+                    text: '<i class="fa fa-sticky-note-o"></i> Report a problem here',
+                    callback: openOsmNote
                 }
             ]
         });
@@ -203,4 +207,22 @@ function openDesire(e) {
 function openOSM(e) {
     const url = 'https://www.openstreetmap.org/#map=' + this.getZoom() + '/' + e.latlng.lat + '/' + e.latlng.lng;
     window.open(url, '_blank');
+}
+
+function openOsmNote(e) {
+  bootbox.prompt({
+    title: 'Report a problem',
+    message: '<p>Right-click on a problematic spot and explain the problem in a few words, i.e. "there is a missing path here", or "there is a fence here", or even "this path is not winter-maintained". <br>Someone will review it and take care of it.</p>',
+    callback: function(result) {
+        if (result !== null) {
+          createOsmNote(e.latlng, result)
+          .then(function(e) {
+            alert('Note added successfully!');
+          })
+          .catch(function(e) {
+            alert("There was an error creating a note. Try again later")
+          });
+        }
+    }
+  });
 }
