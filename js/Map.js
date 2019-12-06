@@ -215,7 +215,8 @@ function openOsmNote(e) {
     message: '<p>Right-click on a problematic spot and explain the problem in a few words, i.e. "there is a missing path here", or "there is a fence here", or even "this path is not winter-maintained". <br>Someone will review it and take care of it.</p>',
     callback: function(result) {
         if (result !== null) {
-          createOsmNote(e.latlng, result)
+          const url=location.href;
+          createOsmNoteWithComment(e.latlng, result, 'See: ' + url)
           .then(function(e) {
             BR.message.showWarning("Note created successfully");
           })

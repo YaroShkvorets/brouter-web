@@ -17,12 +17,20 @@ const osm = new OsmRequest({
 global.createOsmNote = function (latlng, text) {
   return new Promise(function(resolve, reject) {
     osm.createNote(latlng.lat, latlng.lng, text)
+    .then(id => resolve())
+    .catch(e => reject(e))
+  })
+}
+
+global.createOsmNoteWithComment = function (latlng, text, comment) {
+  return new Promise(function(resolve, reject) {
+    osm.createNote(latlng.lat, latlng.lng, text)
     .then(function(id) {
-      resolve();
+      osm.commentNote(parseInt(id.id), comment)
+      .then(id => resolve())
+      .catch(e => resolve())  //don't care if comment wasn't posted
     })
-    .catch(function(e) {
-      reject(e);
-    })
+    .catch(e => reject(e))
   })
 }
 
