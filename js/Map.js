@@ -36,7 +36,7 @@ BR.Map = {
                     callback: openOSM
                 },
                 {
-                    text: '<i class="fa fa-sticky-note-o"></i> Report a problem here',
+                    text: '<i class="fa fa-flag"></i> Report a problem here',
                     callback: openOsmNote
                 }
             ]
@@ -217,10 +217,10 @@ function openOsmNote(e) {
         if (result !== null) {
           createOsmNote(e.latlng, result)
           .then(function(e) {
-            alert('Note added successfully!');
+            BR.message.showWarning("Note created successfully");
           })
           .catch(function(e) {
-            alert("There was an error creating a note. Try again later")
+            BR.message.showError("There was an error creating a note.<br>Try again later.")
           });
         }
     }
