@@ -262,9 +262,13 @@
               $('#elevation-chart').addClass('show')
               $('#elevation-btn').addClass('active');
             }
-            if(segments.length==1){
+            if(latLngs.length==2){
               drawButton.state('activate-draw');  //stop draw (people usually route A->B)
               routing.draw(false);
+            }
+            if(latLngs.length==1){
+              drawButton.state('deactivate-draw');  //start draw (if user deleted one point)
+              routing.draw(true);
             }
             //routingPathQuality.update(track, segmentsLayer);
             if (BR.conf.transit) {
