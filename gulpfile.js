@@ -101,7 +101,7 @@ gulp.task('scripts', function() {
     else gutil.log(gutil.colors.green('Running in Release mode'));
 
     return gulp
-        .src(paths.scripts, { base: '.' })
+        .src(paths.scripts, { base: '.', allowEmpty:true})
         .pipe(sourcemaps.init())
         .pipe(cached('scripts'))
         .pipe(gulpif(!debug, uglify()))
@@ -121,7 +121,7 @@ gulp.task('concat', function() {
 
 gulp.task('styles', function() {
     return gulp
-        .src(paths.styles)
+        .src(paths.styles, {allowEmpty:true})
         .pipe(
             modifyCssUrls({
                 modify(url, filePath) {
