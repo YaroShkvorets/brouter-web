@@ -451,5 +451,13 @@ BR.Routing = L.Routing.extend({
     hideStops: function(){
       this._showingStops = false;
       this._map.removeLayer(this._stopMarkers);
+    },
+
+    dimRoutes: function(){
+      this._eachSegment(function(m1, m2) {
+        if (m1 && m1._routing.nextLine !== null) {
+            m1._routing.nextLine.setStyle({ color: 'dimgray' });
+        }
+      });
     }
 });

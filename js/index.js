@@ -177,6 +177,7 @@
         [profile, profileControl].forEach(control =>
             control.on('update', function(evt) {
                 BR.message.hide();
+                routing.dimRoutes();
                 var profileId = routingOptions.getCustomProfile();
                 router.uploadProfile(profileId, evt.profileText, function(err, profileId) {
                     if (!err) {
