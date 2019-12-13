@@ -114,15 +114,15 @@ BR.ProfileControl = L.Evented.extend({
 
     _initControls: function(profileText) {
         this._makeControl(
-            'roadsPenaltyParam',
+            'roadsPen',
             'Avoid unsafe roads',
-            'Avoid dangerous roads, taking into account road type, number of car lanes, speed limit and bike lanes'
+            'Avoid dangerous roads, taking into account road type, number of car lanes, speed limit and cycling facilities'
         );
-        this._makeControl('sidewalkPenaltyParam', 'Avoid sidewalks', 'Avoid sidewalks and narrow footpaths');
-        this._makeControl('surfacePenaltyParam', 'Avoid wet feet', 'Avoid unpaved pathways and roads');
-        this._makeControl('litPenaltyParam', 'Avoid dark alleys', 'Avoid unlit pathways and roads');
-        this._makeControl('plowPenaltyParam', 'Avoid snowbanks', 'Avoid non-plowed pathways');
-        this._makeControl('stopSignPenaltyParam', 'Avoid stops and lights', 'Avoid Stop signs and traffic lights');
+        this._makeControl('sidewalkPen', 'Avoid sidewalks', 'Avoid sidewalks and narrow footpaths');
+        this._makeControl('surfacePen', 'Avoid wet feet', 'Avoid unpaved pathways and roads');
+        this._makeControl('litPen', 'Avoid dark alleys', 'Avoid unlit pathways and roads');
+        this._makeControl('plowPen', 'Avoid snowbanks', 'Avoid non-plowed pathways');
+        this._makeControl('stopSignPen', 'Avoid stops and lights', 'Avoid stop signs and traffic lights');
     },
 
     _makeControl: function(sliderId, sliderTitle, hint) {
