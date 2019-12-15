@@ -30,7 +30,7 @@ BR.ProfileControl = L.Evented.extend({
         var profileName = options.profile,
             profileUrl;
         for (let key of Object.keys(params)) {
-            if(key.indexOf("PenaltyParam")!=-1){
+            if(key.indexOf("Pen")!=-1){
               this.profileParams[key] = parseFloat(params[key]);
             }
         }
