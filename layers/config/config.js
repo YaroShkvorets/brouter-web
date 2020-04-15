@@ -1,11 +1,10 @@
 BR.confLayers = {};
 
 BR.confLayers.defaultBaseLayers = [
-    'wikimedia-map',
+    '1065', //hike & bike
     'Esri.WorldImagery',
     'cyclosm',
     'standard',
-    '1065',  //hike & bike
     '1059' //public transit
 ];
 
@@ -16,7 +15,7 @@ BR.confLayers.languageDefaultLayers = [
     '1021' // sputnik.ru
 ];
 
-BR.confLayers.defaultOverlays =  [
+BR.confLayers.defaultOverlays = [
     'Strava_Cycling_Heatmap',
     'HikeBike.HillShading',
     'Waymarked_Trails-Cycling',
